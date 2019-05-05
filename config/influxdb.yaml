@@ -1,0 +1,36 @@
+host: !secret influx_host
+username: home-assistant
+password: !secret influx_pw
+max_retries: 3
+default_measurement: state
+exclude:
+  entities:
+     - updater.updater
+     - sun.sun
+     - sensor.time
+     - sensor.date
+     - sensor.moon
+     - sensor.sunset
+     - sensor.sunrise
+     - sensor.solar_angle
+     - sensor.season
+     - sensor.dusk
+     - sensor.dawn
+     - sensor.luft_mean
+     - sensor.speed_dl_mean
+     - sensor.speed_ping_mean
+     - sensor.speed_ul_mean
+     - sensor.yr_symbol
+     - binary_sensor.workday_sensor
+     - binary_sensor.solar_angle
+  domains:
+     - automation
+     - group
+     - updater
+     - history_graph
+     - scene
+#~ tags:
+  #~ instance: prod
+  #~ source: hass
+#~ tags_attributes:
+  #~ friendly_name

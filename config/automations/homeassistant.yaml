@@ -1,0 +1,15 @@
+- id: hass_update
+  alias: 'HASS Update Available'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: updater.updater
+  action:
+    - service: notify.matrix_notify
+      data:
+        message: >
+          Update for Home Assistant is available.
+    - service: notify.notify_mail
+      data:
+        message: >
+          Update for Home Assistant is available.

@@ -1,0 +1,34 @@
+messwerte:
+  name: Messwerte
+  view: no
+  entities:
+    - sensor.schlafzimmer_temperatur
+    - sensor.schlafzimmer_feuchtigkeit
+    - sensor.zimmer1_temperatur
+    - sensor.zimmer1_feuchtigkeit
+    - sensor.zimmer2_temperatur
+    - sensor.zimmer2_feuchtigkeit
+
+licht:
+  name: Alle Lichter
+  view: no
+  entities:
+    - light.diele_hauptlicht
+    - light.wc
+    - light.badezimmer
+    - light.badezimmer_spiegel
+    - light.zimmer_1
+    - light.zimmer_2
+    - group.wohnraum_licht
+    - group.schlafzimmer_licht
+
+
+schatten:
+  name: Alle Rollos
+  view: no
+  entities:
+    - cover.bad_rollo
+    - cover.zimmer1_rollo
+    - cover.zimmer2_rollo
+    - group.schlafzimmer_rollos
+    - group.wohnraum_rollos

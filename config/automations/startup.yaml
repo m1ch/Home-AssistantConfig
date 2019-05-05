@@ -1,0 +1,51 @@
+- id: startup
+  alias: 'Startup'
+  initial_state: 'on'
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - delay: 0:00:03 # Wait 3 secons after startup
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.mich_status_dropdown
+        option: >
+          {% if  states.binary_sensor.tel_mich.state == 'on' %}
+            Home
+          {% else %}
+            Away
+          {% endif %}
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.eva_status_dropdown
+        option: >
+          {% if  states.binary_sensor.tel_eva.state == 'on' %}
+            Home
+          {% else %}
+            Away
+          {% endif %}
+    - delay: 0:00:02
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.people_status_dropdown
+        option: >
+          {% if states.input_select.mich_status_dropdown.state == 'Away' and
+                states.input_select.eva_status_dropdown.state == 'Away' %}
+            Absent
+          {% else %}
+            Present
+          {% endif %}
+# Check sonoffs for status
+    - delay: 0:00:05
+    - service: mqtt.publish
+      data:
+        topic: "plug_2216ED/cmnd/sonoffs/power"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: "plug_222C60/cmnd/sonoffs/power"
+        payload: ""
+    - service: mqtt.publish
+      data:
+        topic: "plug_2F5AE8/cmnd/sonoffs/power"
+        payload: ""

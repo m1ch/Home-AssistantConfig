@@ -1,0 +1,43 @@
+- name: notify_mail
+  platform:  smtp
+  server:    !secret mail_server
+  sender:    !secret mail_username
+  recipient: !secret p1_email
+  port:      !secret mail_port
+  username:  !secret mail_username
+  password:  !secret mail_key
+  starttls:  true
+
+- name: matrix_notify
+  platform: matrix
+  default_room: !secret matrix_room2
+
+- name: luftdaten_staub
+  platform: rest
+  resource: https://api.luftdaten.info/v1/push-sensor-data/
+  method: POST_JSON
+  headers:
+      X-PIN: 1
+      X-Sensor: !secret esp_id
+- name: rest_test
+  platform: rest
+  resource: http://ptsv2.com/t/0dpo4-1553718886/post
+  method: POST
+  headers:
+      X-PIN: 1
+      X-Sensor: 'esp8266-000000'
+
+
+
+  #~ play_request2:
+    #~ url: https://api.luftdaten.info/v1/push-sensor-data/
+    #~ method: POST
+    #~ headers:
+      #~ X-PIN: 1
+      #~ X-Sensor: !secret esp_id
+    #~ payload: '{"software_version": "Home-Assistant 0.9",
+               #~ "sensordatavalues": [
+                 #~ { "value_type": "P1", "value": {{SDS_P1}} },
+                 #~ { "value_type": "P2", "value": {{SDS_P2}} }]}'
+    #~ content_type:  'application/json; charset=utf-8'
+    #~ verify_ssl: true

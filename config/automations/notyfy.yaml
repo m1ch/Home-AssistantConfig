@@ -1,0 +1,103 @@
+- id: matrix_000001
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: matrix_command
+      event_data:
+        command: get_help
+  action:
+    - service: notify.matrix_notify
+      data:
+        message: >
+          This is the HASS Matrix help.
+
+          The following commands are available:
+            !sensor: Return all sensor values.
+            !blindsopen: open all blinds.
+            !lightsoff: Turn off all lights.
+            !vacation: turn vacation mode on.
+            !time: get the current server time.
+- id: matrix_000002
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: matrix_command
+      event_data:
+        command: get_time
+  action:
+    - service: notify.matrix_notify
+      data:
+        message: >
+          {{now()}}
+- id: matrix_000003
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: matrix_command
+      event_data:
+        command: get_sensorvalues
+  action:
+    - service: notify.matrix_notify
+      data:
+        message: >
+          {% for statex in states.sensor -%}
+            {% if statex.state != 'unknown' -%}
+              {{ statex.name | lower }} => {{statex.state_with_unit}}
+            {% endif %}
+          {%- endfor %}
+        #~ message: >
+          #~ {% for state in states.sensor -%}
+            #~ {%- if loop.first %}
+              #~ The {% elif loop.last %}
+              #~ and the  {% else %}
+              #~ the {% endif -%}
+            #~ {{ state.name | lower }} is {{state.state_with_unit}},
+          #~ {%- endfor -%}.
+- id: matrix_000004
+  alias: 'React to an introduction'
+  trigger:
+    platform: event
+    event_type: matrix_command
+    event_data:
+      command: introduction
+  action:
+    service: notify.matrix_notify
+    data_template:
+      message: "Hello {{trigger.event.data.args['name']}}"
+- id: matrix_000005
+  trigger:
+    platform: event
+    event_type: matrix_command
+    event_data:
+      command: set_blindsopen
+  action:
+    - service: cover.open_cover
+      entity_id: group.all_covers
+    - delay: 0:00:05
+    - service: notify.matrix_notify
+      data_template:
+        message: "All Blinds opened!"
+- id: matrix_000006
+  trigger:
+    platform: event
+    event_type: matrix_command
+    event_data:
+      command: set_lightsoff
+  action:
+    - service: light.turn_off
+      entity_id: group.all_lights
+    - delay: 0:00:05
+    - service: notify.matrix_notify
+      data_template:
+        message: "All lights off!"
+- id: matrix_000007
+  trigger:
+    platform: event
+    event_type: matrix_command
+    event_data:
+      command: set_vacation
+  action:
+    - delay: 0:00:03
+    - service: notify.matrix_notify
+      data_template:
+        message: "No action defined jet"

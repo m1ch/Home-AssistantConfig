@@ -1,0 +1,63 @@
+### Wohnzimmer am Morgen
+- id: livingroom_sunrise
+  alias: 'Sonnenaufgang im Wohnzimmer'
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.solar_angle
+    above: 0
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: cover.wohnraum_rollo_coutch
+        state: closed
+      - condition: state
+        entity_id: cover.wohnraum_rollo_kochen
+        state: closed
+  action:
+    - service: cover.open_cover
+      entity_id: cover.wohnraum_rollo_coutch
+    - service: cover.open_cover
+      entity_id: cover.wohnraum_rollo_kochen
+
+###
+- id: livingroom_sunset
+  alias: 'Sonnenuntergang im Wohnzimmer'
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.solar_angle
+      below: 1
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.yr_wind_speed
+        below: 10
+      - condition: numeric_state
+        entity_id: sensor.zamg_wind_max_speed
+        below: 25
+  action:
+    - service: cover.close_cover
+      entity_id: cover.wohnraum_rollo_coutch
+    - service: cover.close_cover
+      entity_id: cover.wohnraum_rollo_kochen
+
+### TV off at night
+- id: tv_off_ehen_dark
+  alias: 'Fehrnsehr wird ausgeschalten'
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: media_player.yamaha_receiver
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ states.sun.sun.attributes.elevation < 2 }}'
+  action:
+    - service:   light.turn_on
+      entity_id:
+      - light.diele_hauptlicht

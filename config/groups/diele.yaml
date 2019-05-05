@@ -1,0 +1,7 @@
+diele:
+  name: Diele
+  view: yes
+  entities:
+    - automation.dielen_licht_mit_verzogerung_ausschalten
+    - light.diele_hauptlicht
+    - input_boolean.entrance_door

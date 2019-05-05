@@ -1,0 +1,46 @@
+### Alle Rollläden mit fehrnbedienung schliessen
+- id: close_all_blind_with_rc1
+  alias: 'Rollläden mit Fehrnbedienung schliessen'
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: /RC1/B01_short
+    payload: 'ON'
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.yr_wind_speed
+        below: 10
+  action:
+    - service:   mqtt.publish
+      data:
+        topic:     "/hass/debug"
+        payload:   "TRIGGER: RC1 RL schliesen"
+    - service:    scene.turn_on
+      entity_id:  scene.all_blinds_closed
+
+### Alle Rollläden mit fehrnbedienung öffnen
+- id: open_all_blind_with_rc1
+  alias: 'Rollläden mit Fehrnbedienung öffnen'
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: /RC1/B02_short
+    payload: 'ON'
+  action:
+    service:    scene.turn_on
+    entity_id:  scene.all_blinds_opened
+
+### Alle lichter mit fernbedienung ausschalten
+- id: rc1_all_lights_off
+  alias: 'Alle lichter mit fernbedienung ausschalten'
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: /RC1/B03_short
+    payload: 'ON'
+  action:
+    service:    scene.turn_on
+    entity_id:  scene.all_lights_off
+

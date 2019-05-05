@@ -1,0 +1,94 @@
+- platform: yr
+  name: yr
+  monitored_conditions:
+    - temperature
+    - symbol
+    - precipitation
+    - windSpeed
+    - pressure
+    - windDirection
+    - humidity
+#    - fog
+    - cloudiness
+#    - lowClouds
+#    - mediumClouds
+#    - highClouds
+    - dewpointTemperature
+
+- platform: zamg
+  monitored_conditions:
+    - temperature
+    - humidity
+#    - pressure
+    - pressure_sealevel
+    - wind_speed
+    - wind_bearing
+    - wind_max_speed
+#    - wind_max_bearing
+    - sun_last_hour
+    - precipitation
+    - dewpoint
+
+- platform: waqi
+  #~ name: "Luft Qualitaet"
+  token: !secret waqi_token
+  locations:
+  - don-bosco
+
+- platform: mqtt
+  name: "Terasse Temperature"
+  state_topic: !secret weather_station_topic
+  unit_of_measurement: '°C'
+  value_template: "{{ value_json.BME280.Temperature }}"
+  json_attributes_topic:
+    BME280
+- platform: mqtt
+  name: "Terasse Luftfeuchtigkeit"
+  state_topic: !secret weather_station_topic
+  unit_of_measurement: '%'
+  value_template: "{{ value_json.BME280.Humidity }}"
+  json_attributes_topic:
+    BME280
+- platform: mqtt
+  name: "Terasse Luftruck"
+  state_topic: !secret weather_station_topic
+  unit_of_measurement: 'hPa'
+  value_template: "{{ value_json.BME280.Pressure }}"
+  json_attributes_topic:
+    BME280
+- platform: mqtt
+  name: "Terasse Feinstaub 2.5µm"
+  state_topic: !secret weather_station_topic
+  unit_of_measurement: 'µg/m³'
+  value_template: "{{ value_json['SDS0X1']['PM2.5'] }}"
+  json_attributes_topic:
+    SDS0X1
+- platform: mqtt
+  name: "Terasse Feinstaub 10µm"
+  state_topic: !secret weather_station_topic
+  unit_of_measurement: 'µg/m³'
+  value_template: "{{ value_json.SDS0X1.PM10 }}"
+  json_attributes_topic:
+    SDS0X1
+
+- platform: luftdaten
+  sensor_id: !secret luftdaten_station01
+  show_on_map: true
+  sensors:
+    monitored_conditions:
+      - P1
+      - P2
+- platform: luftdaten
+  sensor_id: !secret luftdaten_station02
+  show_on_map: true
+  sensors:
+    monitored_conditions:
+      - P1
+      - P2
+- platform: luftdaten
+  sensor_id: !secret luftdaten_station03
+  show_on_map: true
+  sensors:
+    monitored_conditions:
+      - temperature
+      - humidity

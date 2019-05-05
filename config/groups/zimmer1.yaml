@@ -1,0 +1,15 @@
+zimmer1_automations:
+  view: no
+  entities:
+    - automation.sonnenaufgang_im_zimmer_1
+    - automation.sonnenuntergang_im_zimmer_1
+
+zimmer1:
+  name: Zimmer 1
+  view: yes
+  entities:
+    - sensor.zimmer1_temperatur
+    - sensor.zimmer1_feuchtigkeit
+    - group.zimmer1_automations
+    - cover.zimmer1_rollo
+    - light.zimmer_1

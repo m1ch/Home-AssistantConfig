@@ -1,0 +1,43 @@
+server:
+  name: Server Graph
+  entities:
+    - sensor.cpu_use
+    - sensor.ram_free
+  hours_to_show: 2
+  refresh: 10
+
+network:
+  name: Netzwerk Statistik
+  entities:
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
+  hours_to_show: 24
+  refresh: 60
+
+weather:
+  name: Wetter
+  entities:
+    - sensor.zamg_sun_last_hour
+    - sensor.yr_humidity
+    - sensor.zamg_humidity
+    - sensor.yr_cloudiness
+    - sensor.yr_precipitation
+    - sensor.zamg_precipitation
+    - sensor.yr_pressure
+    - sensor.zamg_pressure_sealevel
+    - sensor.zamg_pressure
+    - sensor.yr_temperature
+    - sensor.zamg_temperature
+    - sensor.yr_wind_direction
+    - sensor.zamg_wind_bearing
+    - sensor.yr_wind_speed
+    - sensor.zamg_wind_speed
+    - sensor.zamg_wind_max_speed
+    - sensor.yr_dewpoint_temperature
+    - sensor.zamg_dewpoint
+    - sensor.waqi_donboscokirche_kreuzung_karntnerstrasse_alte_poststrasse_austria
+    #~ - sun.sun.elevation
+    #~ - sun.sun.azimuth
+  hours_to_show: 24
+  refresh: 60

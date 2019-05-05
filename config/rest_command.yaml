@@ -1,0 +1,85 @@
+rest_send_luftdaten_all:
+  url: https://api-rrd.madavi.de/data.php
+  method: POST
+  headers:
+    X-PIN: 0
+    X-Sensor: !secret esp_id
+  payload: '{"software_version": "Home-Assistant 0.9",
+             "sensordatavalues": [
+               {"value_type": "SDS_P1", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
+               {"value_type": "SDS_P2", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} },
+               {"value_type": "BME280_temperature", "value": {{ states("sensor.terasse_temperature") }} },
+               {"value_type": "BME280_pressure", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} },
+               {"value_type": "BME280_humidity", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} }]}'
+  content_type:  'application/json; charset=utf-8'
+  verify_ssl: true
+
+rest_send_luftdaten_dust:
+  url: https://api.luftdaten.info/v1/push-sensor-data/
+  method: POST
+  headers:
+    X-PIN: 1
+    X-Sensor: !secret esp_id
+  payload: '{"software_version": "Home-Assistant 0.9",
+             "sensordatavalues": [
+               { "value_type": "P1", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
+               { "value_type": "P2", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} }]}'
+  content_type:  'application/json; charset=utf-8'
+  verify_ssl: true
+
+rest_send_luftdaten_htp:
+  url: https://api.luftdaten.info/v1/push-sensor-data/
+  method: POST
+  headers:
+    X-PIN: 11
+    X-Sensor: !secret esp_id
+  payload: '{"software_version": "Home-Assistant 0.9",
+             "sensordatavalues": [
+               { "value_type": "temperature", "value": {{ states("sensor.terasse_temperature") }} },
+               { "value_type": "humidity", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} },
+               { "value_type": "pressure", "value": {{ states("sensor.terasse_luftruck") }} }]}'
+  content_type:  'application/json; charset=utf-8'
+  verify_ssl: true
+
+
+#########################################################################
+# rest_send_to_dump01:
+#   url: http://ptsv2.com/t/0dpo4-1553718886/post
+#   method: POST
+#   headers:
+#     X-PIN: 0
+#     X-Sensor: 'esp8266-000000'
+#   payload: '{"software_version": "Home-Assistant 0.9",
+#              "sensordatavalues": [
+#                {"value_type": "SDS_P1", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
+#                {"value_type": "SDS_P2", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} },
+#                {"value_type": "BME280_temperature", "value": {{ states("sensor.terasse_temperature") }} },
+#                {"value_type": "BME280_pressure", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} },
+#                {"value_type": "BME280_humidity", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} }]}'
+#   content_type:  'application/json; charset=utf-8'
+#   verify_ssl: true
+# rest_send_to_dump02:
+#   url: http://ptsv2.com/t/0dpo4-1553718886/post
+#   method: POST
+#   headers:
+#     X-PIN: 1
+#     X-Sensor: 'esp8266-000000'
+#   payload: '{"software_version": "Home-Assistant 0.9",
+#              "sensordatavalues": [
+#                { "value_type": "P1", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
+#                { "value_type": "P2", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} }]}'
+#   content_type:  'application/json; charset=utf-8'
+#   verify_ssl: true
+# rest_send_to_dump03:
+#   url: http://ptsv2.com/t/0dpo4-1553718886/post
+#   method: POST
+#   headers:
+#     X-PIN: 11
+#     X-Sensor: 'esp8266-000000'
+#   payload: '{"software_version": "Home-Assistant 0.9",
+#              "sensordatavalues": [
+#                { "value_type": "temperature", "value": {{ states("sensor.terasse_temperature") }} },
+#                { "value_type": "humidity", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} },
+#                { "value_type": "pressure", "value": {{ states("sensor.terasse_luftruck") }} }]}'
+#   content_type:  'application/json; charset=utf-8'
+#   verify_ssl: true

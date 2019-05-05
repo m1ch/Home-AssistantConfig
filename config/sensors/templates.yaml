@@ -1,0 +1,26 @@
+- platform: template
+  sensors:
+    solar_angle:
+      friendly_name: "Solar angle"
+      unit_of_measurement: 'degrees'
+      value_template: "{{ states.sun.sun.attributes.elevation }}"
+    sunrise:
+      value_template: "{{ states.sun.sun.attributes.next_rising }}"
+      unit_of_measurement: 'time'
+    sunset:
+      value_template: "{{ states.sun.sun.attributes.next_setting }}"
+      unit_of_measurement: 'time'
+    dawn:
+      value_template: "{{ states.sun.sun.attributes.next_dawn }}"
+      unit_of_measurement: 'time'
+    dusk:
+      value_template: "{{ states.sun.sun.attributes.next_dusk }}"
+      unit_of_measurement: 'time'
+    yr_wind_speed_km:
+      friendly_name: "YR Windspeed "
+      unit_of_measurement: 'km/h'
+      value_template: "{{ states('sensor.yr_wind_speed')| float  * 3600 / 1000 | round(2) }}"
+    template_sensor_00001:
+      friendly_name: "terasse luftruck"
+      unit_of_measurement: 'hPa'
+      value_template: "{{ states.sensor.terasse_luftruck.state | float * 1.046872616 | round(2) }}"

@@ -1,0 +1,13 @@
+- platform: emby
+  host:    !secret emby_ip
+  api_key: !secret emby_key
+
+- platform: yamaha
+  host:     !secret yamaha_ip
+
+#~ - platform: firetv
+  #~ name: Fire TV
+  #~ host:  !secret firetv_ip
+  #~ adbkey: "/mnt/hass_config/firetv_key/adbkey"
+  #~ get_source: false
+  #~ get_sources: false

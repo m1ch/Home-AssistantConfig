@@ -1,0 +1,15 @@
+# View all events in a logbook
+exclude:
+  #~ entities:
+    #~ - sensor.last_boot
+    #~ - sensor.date
+  domains:
+    - sun
+    - weblink
+    - automation
+    - group
+#~ include:
+  #~ domains:
+    #~ - sensor
+    #~ - switch
+    #~ - media_player

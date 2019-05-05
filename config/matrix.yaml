@@ -1,0 +1,30 @@
+homeserver: https://matrix.org
+username: !secret matrix_name
+password: !secret matrix_key
+rooms:
+  - !secret matrix_room1
+  - !secret matrix_room2
+commands:
+  - word: sensor
+    name: get_sensorvalues
+  - word: help
+    name: get_help
+  - word: blindsopen
+    name: set_blindsopen
+  - word: lightsoff
+    name: set_lightsoff
+  - word: vacation
+    name: set_vacation
+  - word: time
+    name: get_time
+  - expression: "My name is (?P<name>.*)"
+    name: introduction
+
+
+#  - "#someothertest:matrix.org"
+#~ - name: matrix_emi
+  #~ platform:     matrix
+  #~ homeserver:   https://matrix.org
+  #~ username:     !secret matrix_name
+  #~ password:     !secret matrix_key
+  #~ default_room: !secret matrix_room

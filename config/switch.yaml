@@ -1,0 +1,35 @@
+- platform: mqtt
+  name: "MQTT SW 1"
+  state_topic: "plug_2216ED/stat/POWER"
+  command_topic: "plug_2216ED/cmnd/sonoff/power"
+  availability_topic: "plug_2216ED/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+
+- platform: mqtt
+  name: "Switch Vac"
+  state_topic: "plug_222C60/stat/POWER"
+  command_topic: "plug_222C60/cmnd/sonoff/power"
+  availability_topic: "plug_222C60/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+
+- platform: mqtt
+  name: "MQTT SW 3"
+  state_topic: "plug_2F5AE8/stat/POWER"
+  command_topic: "plug_2F5AE8/cmnd/sonoff/power"
+  availability_topic: "plug_2F5AE8/tele/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false

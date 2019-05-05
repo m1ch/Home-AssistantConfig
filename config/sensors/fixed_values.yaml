@@ -1,0 +1,10 @@
+- platform: moon
+
+- platform: season
+  type: meteorological
+  
+- platform: time_date
+  display_options:
+  - 'time'
+  
+

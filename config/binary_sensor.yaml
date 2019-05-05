@@ -1,0 +1,49 @@
+- platform: ping
+  #~ name: PC Mich
+  name: ping_pc_m1
+  host: !secret p1_ip_pc
+  count: 2
+- platform: ping
+  #~ name: Tel Mich
+  name: ping_phone_m1
+  host: !secret p1_ip_tel
+  count: 2
+- platform: ping
+  #~ name: Tel Eva
+  name: ping_phone_e1
+  host: !secret p2_ip_tel
+  count: 2
+- platform: ping
+  #~ name: FHEM
+  name: ping_srv_fhem
+  host: fhem.lan
+  count: 2
+- platform: ping
+  #~ name: Mailserver
+  name: ping_srv_mail
+  host: !secret mail_server
+  count: 2
+- platform: workday
+  country: AT
+  province: ST
+
+#~ ping_srv_mail
+#~ ping_srv_fhem
+#~ ping_phone_e1
+#~ ping_phone_m1
+#~ ping_pc_m1
+#~ - platform: bayesian
+  #~ prior: 0.25
+  #~ name: "mich_home"
+  #~ probability_threshold: 0.85
+  #~ observations:
+    #~ - entity_id: 'binary_sensor.tel_mich'
+      #~ prob_given_true: '0.99'
+      #~ prob_given_false: '0.05'
+      #~ platform: 'state'
+      #~ to_state: 'on'
+    #~ - entity_id: 'binary_sensor.pc_mich'
+      #~ prob_given_true: '0.60'
+      #~ prob_given_false: '0.30'
+      #~ platform: 'state'
+      #~ to_state: 'on'

@@ -1,0 +1,75 @@
+- id: open_blind_if_wind
+  alias: 'Rolllaeden bei Wind automatisch öffnen'
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.yr_wind_speed_km
+      above: 35
+    - platform: numeric_state
+      entity_id: sensor.zamg_wind_max_speed
+      above: 48
+    - platform: numeric_state
+      entity_id: sensor.zamg_wind_speed
+      above: 35
+  action:
+    - service:    scene.turn_on
+      entity_id:  scene.all_blinds_opened
+    - service:   input_boolean.turn_on
+      entity_id:
+        - input_boolean.high_wind
+    - service: notify.matrix_emi
+      data:
+        message:  >
+          Die Windgeschwindigkeit betraegt
+          {{states.sensor.zamg_wind_speed.state_with_unit}} und
+          Winböhen von
+          {{states.sensor.zamg_wind_max_speed.state_with_unit}}.
+          Öffne die Rollos.
+
+- id: open_blind_if_wind2
+  alias: 'Rolllaeden bei Wind automatisch öffnen'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: sensor.yr_wind_speed_km, sensor.zamg_wind_max_speed, sensor.zamg_wind_speed
+  action:
+    #~ - service: input_select.select_option
+      #~ data_template:
+        #~ entity_id: >
+          #~ {% if trigger.entity_id == 'input_select.mich_status_dropdown' %}
+            #~ input_select.mich_status_dropdown
+          #~ {% else %}
+            #~ input_select.eva_status_dropdown
+          #~ {% endif %}
+        #~ option: Extended Away
+    - service:   mqtt.publish
+      data:
+        topic:     "/hass/debug"
+        payload:   "Windtest"
+
+### Östliche Rolllaeden bei einer Aussenthemperatur über 22grad schliessen
+- id: close_blind_if_hot
+  alias: 'Rolllaeden bei Hize automatisch schließen'
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.yr_temperature
+      above: 22
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        before: '13:00:00'
+      - condition: numeric_state
+        entity_id: sensor.yr_wind_speed
+        below: 10
+  action:
+    - service: scene.turn_on
+      entity_id: scene.east_blinds_closed
+    - service: notify.matrix_emi
+      data:
+        message:  >
+          Die Aussentemperatur betraegt
+          {{states.sensor.yr_temperature.state_with_unit}}.
+          Schließe die Rollos.
+

@@ -1,0 +1,123 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude:  !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrisehome_elevation data (altitude above sea level in meters)
+  elevation: !secret home_elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # C for Celcius, F for Fahrenheit
+  temperature_unit: C
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Vienna
+  # Customization file
+  customize: !include customize.yaml
+
+logger:
+  default: warning
+  logs:
+#     homeassistant.core: debug
+#     asyncio: debug
+#     homeassistant.components.cloud.iot: debug
+    homeassistant.components.device_tracker: debug
+    homeassistant.components.python_script: debug
+    homeassistant.components.rest_command: debug
+    homeassistant.notify.rest: debug
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+person:    !include person.yaml
+
+# Enables configuration UI
+config:
+
+system_health:
+
+http:
+
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:          !include config/history.yaml
+recorder:         !include config/recorder.yaml
+
+# View all events in a logbook
+logbook:          !include config/logbook.yaml
+
+matrix:           !include config/matrix.yaml
+notify:           !include config/notify.yaml
+
+# Enables a map showing the location of tracked devices
+map:
+  entities:
+  - device_tracker.tracker_phone_m1
+  - zone.home
+  - zone.work_p1
+  - zone.work_p2
+
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+script:           !include config/scripts.yaml
+
+influxdb:         !include config/influxdb.yaml
+mqtt:             !include config/mqtt.yaml
+
+media_player:     !include config/media_player.yaml
+
+cover:            !include config/cover.yaml
+light:            !include config/light.yaml
+switch:           !include config/switch.yaml
+sensor:           !include_dir_merge_list config/sensors
+binary_sensor:    !include config/binary_sensor.yaml
+zone:             !include config/zones.yaml
+device_tracker:   !include config/device_tracker.yaml
+input_boolean:    !include config/input_boolean.yaml
+input_select:     !include config/input_select.yaml
+
+automation:       !include automations.yaml
+automation old:   !include_dir_merge_list config/automations
+
+history_graph:    !include config/history_graph.yaml
+#~ group:            !include_dir_merge_named config/groups
+
+lovelace:
+  mode: yaml
+
+speedtestdotnet:
+  scan_interval:
+    minutes: 20
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+shopping_list:
+
+
+python_script:
+# Hello World component
+hello_world:
+
+rest_command: !include config/rest_command.yaml

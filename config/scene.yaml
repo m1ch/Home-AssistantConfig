@@ -1,0 +1,87 @@
+- name: Movies
+  entities:
+    group.wohnraum_licht:
+      state: off
+    cover.wohnraum_rollo_coutch:
+      state: closed
+    cover.wohnraum_rollo_kochen:
+      state: closed
+
+# alle Rollaeden öffnen
+- name: all_blinds_opened
+  entities:
+    cover.bad_rollo:
+      state: open
+    cover.schlafzimmer_rollo_links:
+      state: open
+    cover.schlafzimmer_rollo_mitte:
+      state: open
+    cover.schlafzimmer_rollo_rechts:
+      state: open
+    cover.zimmer1_rollo:
+      state: open
+    cover.zimmer2_rollo:
+      state: open
+    cover.wohnraum_rollo_essen:
+      state: open
+    cover.wohnraum_rollo_kochen:
+      state: open
+    cover.wohnraum_rollo_coutch:
+      state: open
+
+
+# alle Rollaeden schliessen
+- name: all_blinds_closed
+  entities:
+    cover.bad_rollo:
+      state: closed
+    cover.schlafzimmer_rollo_links:
+      state: closed
+    cover.schlafzimmer_rollo_mitte:
+      state: closed
+    cover.schlafzimmer_rollo_rechts:
+      state: closed
+    cover.zimmer1_rollo:
+      state: closed
+    cover.zimmer2_rollo:
+      state: closed
+    cover.wohnraum_rollo_kochen:
+      state: closed
+    cover.wohnraum_rollo_coutch:
+      state: closed
+
+# alle Rollaeden ost schliessen
+- name: east_blinds_closed
+  entities:
+    cover.schlafzimmer_rollo_mitte:
+      state: closed
+    cover.schlafzimmer_rollo_rechts:
+      state: closed
+    cover.wohnraum_rollo_kochen:
+      state: closed
+    cover.zimmer1_rollo:
+      state: closed
+    cover.zimmer2_rollo:
+      state: closed
+
+# alle Rollaeden im Wohnzimmer
+- name: bedroom_at_morning
+  entities:
+    cover.schlafzimmer_rollo_links:
+      position: 16
+    cover.schlafzimmer_rollo_mitte:
+      position: 1
+    cover.schlafzimmer_rollo_rechts:
+      state: open
+
+# alle Rollaeden im Wohnzimmer schließen
+- name: rl_test
+  entities:
+    cover.zimmer1_rollo:
+      position: 1
+
+# Alle lichter aus
+- name: all_lights_off
+  entities:
+    group.all_lights:
+      state: off

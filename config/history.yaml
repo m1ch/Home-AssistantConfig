@@ -1,0 +1,21 @@
+# Enables support for tracking state changes over time.
+exclude:
+  domains:
+    - automation
+    - group
+    - weblink
+    - updater
+    - scene
+    - history_graph
+  entities:
+    - sun.sun # Don't record sun data
+    - sensor.last_boot # Comes from 'systemmonitor' sensor platform
+    - sensor.date
+    - sensor.time
+    - sensor.moon
+    - sensor.sunset
+    - sensor.sunrise
+    - sensor.solar_angle
+    - sensor.season
+    - sensor.yr_symbol
+    - binary_sensor.workday_sensor

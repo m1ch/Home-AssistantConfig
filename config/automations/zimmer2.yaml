@@ -1,0 +1,40 @@
+- id: room_2_sunrise
+  alias: 'Sonnenaufgang im Zimmer 2'
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.solar_angle
+    above: 0
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: cover.zimmer2_rollo
+        state: closed
+  action:
+    - service: cover.open_cover
+      entity_id:  cover.zimmer2_rollo
+
+###
+- id: room_2_sunset
+  alias: 'Sonnenuntergang im Zimmer 2'
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.solar_angle
+      below: 1
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.yr_wind_speed_km
+        below: 30
+      - condition: numeric_state
+        entity_id: sensor.zamg_wind_max_speed
+        below: 30
+      - condition: state
+        entity_id: cover.zimmer2_rollo
+        state: open
+  action:
+    - service: cover.close_cover
+      entity_id:  cover.zimmer2_rollo

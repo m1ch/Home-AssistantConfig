@@ -1,0 +1,47 @@
+### Rollo
+- id: br_sunrise
+  alias: Sonnenaufgang im Badezimmer
+  initial_state: 'off'
+  trigger:
+  - platform: time
+    at: '8:31:00'
+  - platform: numeric_state
+    entity_id: sensor.solar_angle
+    above: 10
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: cover.bad_rollo
+      state: closed
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: time
+      after: 08:30:00
+  action:
+  - service: cover.open_cover
+    entity_id: cover.bad_rollo
+- id: br_sunset
+  alias: Sonnenuntergang im Badezimmer
+  initial_state: 'on'
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.solar_angle
+    below: 5
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.yr_wind_speed
+      below: 10
+    - condition: numeric_state
+      entity_id: sensor.zamg_wind_max_speed
+      below: 25
+    - condition: state
+      entity_id: cover.bad_rollo
+      state: open
+  action:
+  - service: cover.close_cover
+    entity_id: cover.bad_rollo
+    

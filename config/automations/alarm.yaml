@@ -1,0 +1,126 @@
+- id: alarm001
+  alias: Terrassentüre öffnet
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: /DOOR_EZ1/State
+    payload: OPEN
+  condition:
+    condition: state
+    entity_id: input_boolean.terrace_door
+    state: 'off'
+  action:
+  - service: input_boolean.turn_on
+    entity_id:
+    - input_boolean.terrace_door
+  - service: notify.matrix_emi
+    data:
+      message: 'Die Terrassentüre hat sich geöffnet!'
+- id: '1553728137235'
+  alias: Terrassentüre schließt
+  trigger:
+  - payload: CLOSE
+    platform: mqtt
+    topic: /DOOR_EZ1/State
+  condition: []
+  action:
+  - data: {}
+    entity_id:
+      - input_boolean.terrace_door
+    service: input_boolean.turn_off
+
+#~ - id: door_opens
+  #~ alias: 'Eingangstüre öffnet'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ platform: mqtt
+    #~ topic: /DOOR_VZ1/State
+    #~ payload: 'OPEN'
+  #~ condition:
+    #~ condition: state
+    #~ entity_id: input_boolean.entrance_door
+    #~ state: 'off'
+  #~ action:
+    #~ - service:   input_boolean.turn_on
+      #~ entity_id:
+        #~ - input_boolean.entrance_door
+    #~ - service: notify.matrix_emi
+      #~ data:
+        #~ message: >
+          #~ Die Eingangstüre hat sich geöffnet!
+
+#~ - id: door_opens_5min
+  #~ alias: 'Eingangstüre für mehr als 5 Minuten offen'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ platform: state
+    #~ entity_id: input_boolean.entrance_door
+    #~ to: 'on'
+    #~ for:
+      #~ hours:   0
+      #~ minutes: 5
+      #~ seconds: 0
+  #~ action:
+    #~ - service: notify.matrix_emi
+      #~ data:
+        #~ message: >
+          #~ Die Eingangstüre is für mehr als 5 Minuten offen!
+
+#~ - id: door_closes
+  #~ alias: 'Eingangstüre schließt'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ platform: mqtt
+    #~ topic: /DOOR_VZ1/State
+    #~ payload: 'CLOSE'
+  #~ action:
+    #~ - service:   input_boolean.turn_off
+      #~ entity_id:
+        #~ - input_boolean.entrance_door
+
+#~ - id: door_opens
+  #~ alias: 'Terrassentüre öffnet'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ platform: mqtt
+    #~ topic: /DOOR_EZ1/State
+    #~ payload: 'OPEN'
+  #~ condition:
+    #~ condition: state
+    #~ entity_id: input_boolean.terrace_door
+    #~ state: 'off'
+  #~ action:
+    #~ - service:   input_boolean.turn_on
+      #~ entity_id:
+        #~ - input_boolean.terrace_door
+    #~ - service: notify.matrix_emi
+      #~ data:
+        #~ message: >
+          #~ Die Terrassentüre hat sich geöffnet!
+
+#~ - id: door_closes
+  #~ alias: 'Terrassentüre schließt'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ platform: mqtt
+    #~ topic: /DOOR_EZ1/State
+    #~ payload: 'CLOSE'
+  #~ action:
+    #~ - service:   input_boolean.turn_off
+      #~ entity_id:
+        #~ - input_boolean.terrace_door
+
+
+#~ -id: 'alarm002'
+  #~ alias: 'Terrassentuere schlieszt'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ platform: mqtt
+    #~ topic: /DOOR_EZ1/State
+    #~ payload: 'CLOSE'
+  #~ condition: []
+  #~ action:
+    #~ - service:   input_boolean.turn_off
+      #~ entity_id:
+        #~ - input_boolean.terrace_door
+

@@ -1,6 +1,6 @@
 broker: mqtt.lan
 port: 1883
-client_id: hass
+client_id: !secret hass_test
 keepalive: 600
 username: !secret mqtt_user
 password: !secret mqtt_pw

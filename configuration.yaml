@@ -32,7 +32,7 @@ logger:
 # Enables the frontend
 frontend:
 
-person:    !include person.yaml
+person:    !include config/person.yaml
 
 # Enables configuration UI
 config:

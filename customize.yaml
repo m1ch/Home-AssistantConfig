@@ -13,9 +13,11 @@ sensor.luftdaten_4017_p2:
   unit_of_measurement: µg/m³
 sensor.zamg_humidity:
   icon: mdi:water-percent
+  unit_of_measurement: "%h"
 sensor.yr_humidity:
   friendly_name: yr Humidity
   icon: mdi:water-percent
+  unit_of_measurement: "%h"
 sensor.terasse_luftfeuchtigkeit:
   icon: mdi:water-percent
 sensor.terasse_feinstaub_2_5um:
@@ -34,18 +36,13 @@ cover.schlafzimmer_rollo_links:
   icon: mdi:blinds
 sensor.zimmer1_feuchtigkeit:
   icon: mdi:water-percent
+  unit_of_measurement: "%h"
 sensor.zimmer1_temperatur:
   icon: mdi:thermometer
 sensor.zamg_precipitation:
   unit_of_measurement: "mm"
 sensor.zamg_sun_last_hour:
   unit_of_measurement: "% Sun"
-sensor.yr_humidity:
-  unit_of_measurement: "%h"
-sensor.zamg_humidity:
-  unit_of_measurement: "%h"
-sensor.zimmer1_feuchtigkeit:
-  unit_of_measurement: "%h"
 sensor.zimmer2_feuchtigkeit:
   unit_of_measurement: "%h"
 sensor.schlafzimmer_feuchtigkeit:

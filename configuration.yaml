@@ -116,8 +116,8 @@ speedtestdotnet:
 shopping_list:
 
 
-python_script:
+#python_script:
 # Hello World component
-hello_world:
+#hello_world:
 
 rest_command: !include config/rest_command.yaml

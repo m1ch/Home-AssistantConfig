@@ -8,8 +8,6 @@ homeassistant:
   elevation: !secret home_elevation
   # metric for Metric, imperial for Imperial
   unit_system: metric
-  # C for Celcius, F for Fahrenheit
-  temperature_unit: C
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Vienna
   # Customization file

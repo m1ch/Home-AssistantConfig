@@ -73,3 +73,17 @@
           {{states.sensor.yr_temperature.state_with_unit}}.
           Schließe die Rollos.
 
+- id: '1553724220138'
+  alias: Luftaden.info-update
+  trigger:
+  - entity_id: sensor.terasse_luftruck
+    platform: state
+  condition: []
+  action:
+  - service: rest_command.rest_send_luftdaten_all
+  - service: rest_command.rest_send_luftdaten_dust
+  - service: rest_command.rest_send_luftdaten_htp
+  - service: rest_command.rest_send_to_dump01
+  - service: rest_command.rest_send_to_dump02
+  - service: rest_command.rest_send_to_dump03
+  

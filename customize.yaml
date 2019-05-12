@@ -20,6 +20,7 @@ sensor.yr_humidity:
   unit_of_measurement: "%h"
 sensor.terasse_luftfeuchtigkeit:
   icon: mdi:water-percent
+  unit_of_measurement: "%h"
 sensor.terasse_feinstaub_2_5um:
   icon: mdi:thought-bubble
 sensor.terasse_feinstaub_10um:

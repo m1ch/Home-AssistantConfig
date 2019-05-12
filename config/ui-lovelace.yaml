@@ -1,0 +1,543 @@
+title: EMI's Castle
+views:
+  - title: Home
+    path: default_view
+    icon: mdi:home-assistant
+    badges:
+      - sensor.time
+      - sensor.dawn
+      - sensor.dusk
+      - sensor.terasse_luftfeuchtigkeit
+      - sensor.terasse_luftruck
+      - sensor.terasse_feinstaub_2_5um
+      - sensor.terasse_feinstaub_10um
+      - sensor.terasse_temperature
+      - sensor.yr_wind_speed
+    cards:
+      - type: map
+        aspect_ratio: 100%
+        entities:
+          - device_tracker.mich_nc
+          - zone.home
+          - zone.work_p1
+          - zone.work_p2
+      - type: entities
+        entities:
+          - light.diele_hauptlicht
+          - light.wc
+          - light.badezimmer
+          - light.badezimmer_spiegel
+          - light.zimmer_1
+          - light.zimmer_2
+          - light.kuche_abwasch
+          - light.kuche_insel
+          - light.wohnzimmer_essecke
+          - light.wohnzimmer_licht
+          - light.stehlampe_coutch
+          - light.schlafzimmer
+          - light.schlafzimmer_eva
+          - light.schlafzimmer_michi
+        show_header_toggle: true
+        title: Alle Lichter
+      - type: entities
+        entities:
+          - entity: cover.bad_rollo
+            name: Bad
+          - entity: cover.zimmer1_rollo
+            name: Arbeitszimmer
+          - entity: cover.zimmer2_rollo
+            name: Eva Zimmer
+          - type: divider
+          - entity: cover.schlafzimmer_rollo_links
+            name: Schlafzimmer links
+          - entity: cover.schlafzimmer_rollo_mitte
+            name: Schlafzimmer mitte
+          - entity: cover.schlafzimmer_rollo_rechts
+            name: Schlafzimmer rechts
+          - type: divider
+          - entity: cover.wohnraum_rollo_coutch
+            name: Launch
+          - entity: cover.wohnraum_rollo_essen
+            name: Essecke
+          - entity: cover.wohnraum_rollo_kochen
+            name: Küche
+        show_header_toggle: true
+        title: Rollos
+      #~ - type: entities
+        #~ entities:
+          #~ - automation.alle_lichter_mit_fernbedienung_ausschalten
+          #~ - automation.schlafzimmer_rollos_offnen
+          #~ - automation.startup
+          #~ - automation.terrassenture_offnet
+          #~ - automation.terrassenture_schliesst
+          #~ - automation.rolllaeden_bei_wind_automatisch_offnen
+          #~ - automation.rolllaeden_bei_wind_automatisch_offnen_2
+          #~ - automation.rolllaeden_bei_hize_automatisch_schliessen
+          #~ - automation.fehrnsehr_wird_ausgeschalten
+          #~ - automation.mark_person_as_just_arrived
+          #~ - automation.mark_person_as_home
+          #~ - automation.mark_person_as_just_left
+          #~ - automation.mark_person_as_away
+          #~ - automation.hass_update_available
+          #~ - automation.mark_person_as_extended_away
+          #~ - automation.eingangsture_statusaenderung
+          #~ - automation.react_to_an_introduction
+          #~ - automation.eingangsture_statusaenderung_lang
+          #~ - automation.gps_update
+          #~ - automation.dielen_licht_mit_verzogerung_ausschalten
+          #~ - automation.rollladen_mit_fehrnbedienung_schliessen
+          #~ - automation.staubsauger_lader_aus
+          #~ - automation.rollladen_mit_fehrnbedienung_offnen
+          #~ - automation.wecker
+        #~ title: Automation
+
+  - title: Wetter
+    path: wetter
+    icon: mdi:weather-sunset
+    badges:
+      - sensor.yr_symbol
+      - sensor.yr_temperature
+    cards:
+      - type: weather-forecast
+        entity: weather.dark_sky
+
+      - type: iframe
+        aspect_ratio: 120%
+        url: !secret windy_url
+
+      - type: vertical-stack
+        cards:
+        - type: glance
+          show_name: false
+          show_state: false
+          entities:
+            - entity: sensor.yr_symbol
+            - entity: sun.sun
+            - entity: sensor.moon
+            - entity: sensor.season
+        - type: glance
+          show_name: true
+          show_state: true
+          entities:
+            - entity: sensor.luftdaten_12758_p1
+            - entity: sensor.terasse_feinstaub_2_5um
+            - entity: sensor.luftdaten_12758_p2
+            - entity: sensor.terasse_feinstaub_10um
+        - type: glance
+          show_name: true
+          show_state: true
+          entities:
+            - entity: sensor.yr_wind_direction
+            - entity: sensor.zamg_wind_bearing
+            - entity: sensor.yr_wind_speed_km
+            - entity: sensor.zamg_wind_speed
+            - entity: sensor.zamg_wind_max_speed
+        - type: glance
+          show_name: true
+          show_state: true
+          entities:
+            - entity: sensor.zamg_pressure_sealevel
+            - entity: sensor.yr_pressure
+            - entity: sensor.terasse_luftruck
+            - entity: sensor.terasse_luftruck_relatiev
+        - type: glance
+          show_name: true
+          show_state: true
+          entities:
+            - entity: sensor.yr_humidity
+            - entity: sensor.zamg_humidity
+            - sensor.luftdaten_19477_humidity
+            - entity: sensor.terasse_luftfeuchtigkeit
+        - type: glance
+          show_name: true
+          show_state: true
+          entities:
+            - entity: sensor.yr_temperature
+            - entity: sensor.zamg_temperature
+            - entity: sensor.luftdaten_19477_temperature
+            - entity: sensor.terasse_temperature
+            - entity: sensor.yr_dewpoint_temperature
+            - entity: sensor.zamg_dewpoint
+        - type: entities
+          entities:
+            - entity: sensor.solar_angle
+            - entity: sensor.zamg_sun_last_hour
+            - entity: sensor.yr_cloudiness
+            - entity: sensor.yr_precipitation
+            - entity: sensor.zamg_precipitation
+      - type: history-graph
+        entities:
+          - sensor.yr_temperature
+          - sensor.zamg_temperature
+          - sensor.terasse_temperature
+          - sensor.yr_humidity
+          - sensor.zamg_humidity
+          - sensor.terasse_luftfeuchtigkeit
+          - sensor.luftdaten_19477_temperature
+          - sensor.luftdaten_19477_humidity
+        hours_to_show: 24
+        refresh_interval: 60
+        title: Wetter
+      - type: history-graph
+        entities:
+          - sensor.zamg_sun_last_hour
+          - sensor.yr_cloudiness
+          - sensor.yr_precipitation
+          - sensor.zamg_precipitation
+        hours_to_show: 24
+        refresh_interval: 60
+        title: Sonne
+      - type: history-graph
+        entities:
+          - sensor.terasse_feinstaub_10um
+          - sensor.terasse_feinstaub_2_5um
+          - sensor.luftdaten_4017_p1
+          - sensor.luftdaten_12758_p1
+          - sensor.luftdaten_4017_p2
+          - sensor.luftdaten_12758_p2
+        hours_to_show: 48
+        refresh_interval: 60
+        title: Luftgüte
+      - type: history-graph
+        entities:
+          - sensor.yr_pressure
+          - sensor.zamg_pressure_sealevel
+          - sensor.terasse_luftruck_relatiev
+          - sensor.zamg_pressure
+          - sensor.yr_wind_direction
+          - sensor.zamg_wind_bearing
+          - sensor.yr_wind_speed_km
+          - sensor.zamg_wind_speed
+          - sensor.zamg_wind_max_speed
+          - sensor.yr_dewpoint_temperature
+          - sensor.zamg_dewpoint
+        hours_to_show: 24
+        refresh_interval: 60
+        title: Luft
+  - title: Wohnzimmer
+    path: wohnzimmer
+    panel: false
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity-button
+                entity: light.kuche_abwasch
+                tap_action:
+                  action: call-service
+                  service: light.toggle
+                  service_data:
+                    entity_id: light.kuche_abwasch
+
+              - type: entity-button
+                entity: light.kuche_insel
+                tap_action:
+                  action: call-service
+                  service: light.toggle
+                  service_data:
+                    entity_id: light.kuche_insel
+              - type: entity-button
+                entity: light.stehlampe_coutch
+                tap_action:
+                  action: call-service
+                  service: light.toggle
+                  service_data:
+                    entity_id: light.stehlampe_coutch
+          - type: horizontal-stack
+            cards:
+              - entity: light.wohnzimmer_essecke
+                name: Essecke
+                type: light
+              - entity: light.wohnzimmer_licht
+                name: Wohnecke
+                type: light
+            name: test
+      - type: vertical-stack
+        cards:
+          - entity: media_player.emby_dlna_rxv679_d1a45f
+            type: media-control
+          - entity: media_player.yamaha_receiver
+            type: media-control
+      - type: entities
+        entities:
+          - cover.wohnraum_rollo_coutch
+          - cover.wohnraum_rollo_essen
+          - cover.wohnraum_rollo_kochen
+        show_header_toggle: true
+        title: Rollos
+      - type: entities
+        entities:
+          - automation.sonnenaufgang_im_wohnzimmer
+          - automation.sonnenuntergang_im_wohnzimmer
+        show_header_toggle: false
+        title: Automations
+
+  - title: Zimmer 2
+    path: zimmer2
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - cover.zimmer2_rollo
+          - light.zimmer_2
+
+      - type: entities
+        entities:
+          - automation.sonnenaufgang_im_zimmer_2
+          - automation.sonnenuntergang_im_zimmer_2
+        show_header_toggle: false
+        title: Automations
+
+
+  - title: Zimmer 1
+    path: zimmer1
+    badges:
+      - sensor.zimmer1_temperatur
+      - sensor.zimmer1_feuchtigkeit
+    cards:
+      - type: sensor
+        name: Temperatur (72h)
+        entity: sensor.zimmer1_temperatur
+        graph: line
+        hours_to_show: 72
+        detail: 1
+      - type: sensor
+        name: Luftfeuchtigkeit (72h)
+        entity: sensor.zimmer1_feuchtigkeit
+        graph: line
+        hours_to_show: 72
+        detail: 1
+
+      - type: entities
+        entities:
+          - cover.zimmer1_rollo
+          - light.zimmer_1
+          - switch.mqtt_sw_3
+
+      - type: entities
+        entities:
+          - automation.sonnenaufgang_im_zimmer_1
+          - automation.sonnenuntergang_im_zimmer_1
+        show_header_toggle: false
+        theme: default
+        title: Automations
+
+  - title: Schlafzimmer
+    path: schlafzimmer
+    icon: mdi:bed-empty
+    badges: []
+      #~ - sensor.schlafzimmer_temperatur
+      #~ - sensor.schlafzimmer_feuchtigkeit
+    cards:
+      - type: sensor
+        name: Temperatur (72h)
+        entity: sensor.schlafzimmer_temperatur
+        graph: line
+        hours_to_show: 72
+        detail: 1
+      - type: sensor
+        name: Luftfeuchtigkeit (72h)
+        entity: sensor.schlafzimmer_feuchtigkeit
+        graph: line
+        hours_to_show: 72
+        detail: 1
+      - type: entities
+        entities:
+          - light.schlafzimmer
+          - light.schlafzimmer_eva
+          - light.schlafzimmer_michi
+        show_header_toggle: true
+        title: Licht
+
+      - type: entities
+        entities:
+          - cover.schlafzimmer_rollo_links
+          - cover.schlafzimmer_rollo_mitte
+          - cover.schlafzimmer_rollo_rechts
+        show_header_toggle: true
+        title: Rollos
+
+      - type: entities
+        entities:
+          - switch.mqtt_sw_1
+        show_header_toggle: false
+        title: Luftbefeuchter
+
+      - type: entities
+        entities:
+          - entity: automation.sonnenaufgang_im_schlafzimmer
+          - entity: automation.sonnenuntergang_im_schlafzimmer
+          - entity: automation.luftfeuchte_regler
+        show_header_toggle: false
+        title: Automations
+
+      #~ - type: history-graph
+        #~ entities:
+          #~ - sensor.schlafzimmer_temperatur
+          #~ - sensor.schlafzimmer_feuchtigkeit
+        #~ hours_to_show: 48
+        #~ refresh_interval: 60
+        #~ title: Wetter
+
+
+  - title: Diele Bad Wc
+    path: dbw
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - cover.bad_rollo
+          - light.badezimmer
+          - light.badezimmer_spiegel
+          - light.wc
+        title: Bad und WC
+
+      - type: entities
+        entities:
+          - entity: light.diele_hauptlicht
+          - entity: input_boolean.entrance_door
+          - entity: switch.switch_vac
+        show_header_toggle: false
+        title: Diele
+
+      - type: entities
+        entities:
+          - automation.dielen_licht_mit_verzogerung_ausschalten
+          - automation.sonnenaufgang_im_badezimmer
+          - automation.sonnenuntergang_im_badezimmer
+        show_header_toggle: false
+        title: Automation
+
+
+
+  - title: Infrastruktur
+    path: infrastructure
+    icon: mdi:server-network
+    badges: []
+
+    cards:
+      - type: history-graph
+        entities:
+          - binary_sensor.ping_srv_fhem
+          - binary_sensor.ping_pc_m1
+          - binary_sensor.ping_phone_e1
+          - binary_sensor.ping_phone_m1
+          - binary_sensor.ping_srv_mail
+
+      - type: history-graph
+        entities:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.speedtest_ping
+        hours_to_show: 24
+        refresh_interval: 60
+        title: Netzwerk Statistik
+
+      - type: entities
+        entities:
+          - automation.alle_lichter_mit_fernbedienung_ausschalten
+          - automation.dielen_licht_mit_verzogerung_ausschalten
+          - automation.eingangsture_statusaenderung
+          - automation.eingangsture_statusaenderung_lang
+          - automation.fehrnsehr_wird_ausgeschalten
+          - automation.hass_update_available
+          - automation.mark_person_as_away
+          - automation.mark_person_as_extended_away
+          - automation.mark_person_as_home
+          - automation.mark_person_as_just_arrived
+          - automation.mark_person_as_just_left
+          - automation.react_to_an_introduction
+          - automation.rolllaeden_bei_hize_automatisch_schliessen
+          - automation.rolllaeden_bei_wind_automatisch_offnen
+          - automation.rolllaeden_bei_wind_automatisch_offnen_2
+          - automation.rollladen_mit_fehrnbedienung_schliessen
+          - automation.rollladen_mit_fehrnbedienung_offnen
+          - automation.sonnenaufgang_im_badezimmer
+          - automation.sonnenaufgang_im_schlafzimmer
+          - automation.sonnenaufgang_im_wohnzimmer
+          - automation.sonnenaufgang_im_zimmer_1
+          - automation.sonnenaufgang_im_zimmer_2
+          - automation.sonnenuntergang_im_badezimmer
+          - automation.sonnenuntergang_im_schlafzimmer
+          - automation.sonnenuntergang_im_wohnzimmer
+          - automation.sonnenuntergang_im_zimmer_1
+          - automation.sonnenuntergang_im_zimmer_2
+          - automation.startup
+          - automation.terrassenture_schliesst
+          - automation.terrassenture_offnet
+          - automation.wecker
+          - automation.gps_update
+        show_header_toggle: false
+        title: All Automations
+
+      - type: entities
+        entities:
+          - group.all_sceens
+          - group.all_automations
+        show_header_toggle: true
+        title: automation
+
+
+
+
+
+  - title: PLAY
+    icon: mdi:cards-playing-outline
+    badges:
+      - sensor.yr_symbol
+    cards:
+      - type: media-control
+        entity: media_player.emby_emby_mobile_firefox
+
+      - type: thermostat
+        entity: dsaf
+
+      - entity: group.all_lights
+        tap_action:
+          action: toggle
+        type: entity-button
+      - type: vertical-stack
+        cards:
+          - cards:
+              - entity: light.wohnzimmer_licht
+                type: light
+            name: test
+            type: horizontal-stack
+          - entities:
+            - light.wohnzimmer_essecke
+            - light.wohnzimmer_licht
+            - light.stehlampe_coutch
+            - light.kuche_abwasch
+            - light.kuche_insel
+            show_header_toggle: true
+            title: IT Sensoren
+            type: entities
+          - cards:
+              - entity: light.wohnzimmer_essecke
+                type: light
+              - entity: light.wohnzimmer_licht
+                type: light
+            name: test
+            type: horizontal-stack
+          - type: shopping-list
+          - aspect_ratio: 100%
+            title: xxx
+            type: iframe
+            url: 'https://embed.windy.com/?46.905,15.397,9'
+
+      - entities:
+        - sensor.cpu_use
+        - sensor.ram_free
+        - sensor.speedtest_download
+        - sensor.speedtest_ping
+        - sensor.speedtest_upload
+        - binary_sensor.ping_srv_fhem
+        - binary_sensor.ping_pc_m1
+        - binary_sensor.ping_phone_e1
+        - binary_sensor.ping_phone_m1
+        - binary_sensor.ping_srv_mail
+        show_header_toggle: true
+        title: blblblb
+        type: entities

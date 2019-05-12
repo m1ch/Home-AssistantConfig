@@ -1,0 +1,146 @@
+### Wecker
+- id: alarm_clock
+  alias: Wecker
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '7:05:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.solar_angle
+      below: 2
+    - condition: state
+      entity_id: group.schlafzimmer_rollos
+      state: closed
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+  action:
+  - service: light.turn_on
+    entity_id:
+    - light.schlafzimmer
+### Schlafzimmer am morgen
+- id: bedroom_sunrise
+  alias: Sonnenaufgang im Schlafzimmer
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.solar_angle
+    above: 2
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: cover.schlafzimmer_rollo_links
+        state: closed
+      - condition: state
+        entity_id: cover.schlafzimmer_rollo_mitte
+        state: closed
+      - condition: state
+        entity_id: cover.schlafzimmer_rollo_rechts
+        state: closed
+  action:
+  - service: scene.turn_on
+    entity_id: scene.bedroom_at_morning
+  - service: light.turn_off
+    entity_id:
+    - light.schlafzimmer
+- id: bedroom_day
+  alias: Schlafzimmer Rollos Öffnen
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '10:30:00'
+  action:
+  - service: cover.open_cover
+    entity_id: cover.schlafzimmer_rollo_links
+  - service: cover.open_cover
+    entity_id: cover.schlafzimmer_rollo_mitte
+  - service: cover.open_cover
+    entity_id: cover.schlafzimmer_rollo_rechts
+  - service: light.turn_off
+    entity_id:
+    - light.schlafzimmer
+- id: bedroom_sunset
+  alias: Sonnenuntergang im Schlafzimmer
+  initial_state: 'on'
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.solar_angle
+    below: 1
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.yr_wind_speed
+      below: 10
+    - condition: numeric_state
+      entity_id: sensor.zamg_wind_max_speed
+      below: 25
+  action:
+  - service: cover.close_cover
+    entity_id: cover.schlafzimmer_rollo_links
+  - service: cover.close_cover
+    entity_id: cover.schlafzimmer_rollo_mitte
+  - service: cover.close_cover
+    entity_id: cover.schlafzimmer_rollo_rechts
+
+## Humidifier
+- id: '1553734220138'
+  alias: Luftfeuchte Regler
+  initial_state: 'on'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.schlafzimmer_feuchtigkeit
+    above: 65
+    for:
+      minutes: 5
+  condition:
+  - condition: state
+    entity_id: switch.mqtt_sw_1
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    entity_id:
+    - switch.mqtt_sw_1
+
+#~ - id: turn_on_humidifier
+  #~ alias: Turn on humidifier
+  #~ initial_state: 'on'
+  #~ condition:
+     #~ - condition: time
+       #~ after: '08:15:00'
+       #~ before: '21:45:00'
+     #~ - condition: template
+       #~ value_template: '{{ states.sensor.leeohumid.state | int < 30 }}'
+     #~ - condition: state
+       #~ entity_id: switch.wemoswitch
+       #~ state: 'off'
+  #~ trigger:
+   #~ - platform: time
+     #~ minutes: '/10'
+     #~ seconds: 00
+  #~ action:
+    #~ service: homeassistant.turn_on
+    #~ entity_id: switch.wemoswitch
+
+#~ - id: turn_off_humidifier
+  #~ alias: Turn off humidifier
+  #~ initial_state: 'on'
+  #~ condition:
+    #~ - condition: state
+      #~ entity_id: switch.wemoswitch
+      #~ state: 'on'
+  #~ trigger:
+    #~ platform: template
+    #~ value_template: '{{ states.sensor.leeohumid.state | int >= 30 }}'
+  #~ action:
+    #~ service: homeassistant.turn_off
+#~ entity_id: switch.wemoswitch

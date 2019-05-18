@@ -1,0 +1,8 @@
+wecker_woche:
+  name: Wochentagswecker
+  has_time: true
+
+wecker_we:
+  name: Wochenendwecker
+  has_time: true
+

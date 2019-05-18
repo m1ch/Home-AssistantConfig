@@ -47,3 +47,16 @@
       #~ prob_given_false: '0.30'
       #~ platform: 'state'
       #~ to_state: 'on'
+
+# Time of day
+- platform: tod
+  name: Early Morning
+  after: sunrise
+  after_offset: '-02:00'
+  before: '07:00'
+
+- platform: tod
+  name: Nacht
+  after: sunset
+  after_offset: '-02:00'
+  before: sunrise

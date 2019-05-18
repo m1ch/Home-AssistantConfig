@@ -2,9 +2,7 @@ laundry:
   duration: '00:01:00'
 
 ganglicht:
-  name: Verzögerung für ausschalten vom Ganglicht
   duration: '00:10:00'
 
 staubsaugerladen:
   duration: '16:00:00'
-  

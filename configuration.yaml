@@ -93,6 +93,7 @@ zone:             !include config/zones.yaml
 device_tracker:   !include config/device_tracker.yaml
 input_boolean:    !include config/input_boolean.yaml
 input_select:     !include config/input_select.yaml
+timer:            !include config/timer.yaml
 
 automation:       !include automations.yaml
 automation old:   !include_dir_merge_list config/automations

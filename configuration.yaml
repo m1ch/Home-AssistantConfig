@@ -113,6 +113,12 @@ speedtestdotnet:
     - download
     - upload
 
+calendar:
+  - platform: caldav
+    username: !secret caldav_user
+    password: !secret caldav_pw
+    url:      !secret caldav_url
+
 shopping_list:
 
 

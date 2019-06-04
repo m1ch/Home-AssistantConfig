@@ -3,29 +3,69 @@
   name: ping_pc_m1
   host: !secret p1_ip_pc
   count: 2
+
 - platform: ping
   #~ name: Tel Mich
   name: ping_phone_m1
   host: !secret p1_ip_tel
   count: 2
+
 - platform: ping
   #~ name: Tel Eva
   name: ping_phone_e1
   host: !secret p2_ip_tel
   count: 2
+
 - platform: ping
   #~ name: FHEM
   name: ping_srv_fhem
   host: fhem.lan
   count: 2
+
 - platform: ping
   #~ name: Mailserver
   name: ping_srv_mail
   host: !secret mail_server
   count: 2
+
 - platform: workday
   country: AT
   province: ST
+
+- platform: bayesian
+  name: wind_med
+  prior: 0.3
+  observations:
+    - platform: 'numeric_state'
+      entity_id: sensor.yr_wind_speed_km
+      above: 40
+      prob_given_true: 0.70
+    - platform: 'numeric_state'
+      entity_id: sensor.zamg_wind_speed
+      above: 40
+      prob_given_true: 0.80
+    - platform: 'numeric_state'
+      entity_id: sensor.zamg_wind_speed
+      above: 60
+      prob_given_true: 0.95
+
+- platform: bayesian
+  name: wind_high
+  prior: 0.3
+  observations:
+    - platform: 'numeric_state'
+      entity_id: sensor.yr_wind_speed_km
+      above: 50
+      prob_given_true: 0.80
+    - platform: 'numeric_state'
+      entity_id: sensor.zamg_wind_speed
+      above: 50
+      prob_given_true: 0.90
+    - platform: 'numeric_state'
+      entity_id: sensor.zamg_wind_speed
+      above: 70
+      prob_given_true: 0.98
+
 
 #~ ping_srv_mail
 #~ ping_srv_fhem
@@ -50,13 +90,35 @@
 
 # Time of day
 - platform: tod
-  name: Early Morning
+  name: Morgen
   after: sunrise
-  after_offset: '-02:00'
-  before: '07:00'
+  after_offset: '-00:30'
+  before: '08:00'
+
+- platform: tod
+  name: Vormittag
+  after: '08:00'
+  before: '12:00'
+
+- platform: tod
+  name: Mittag
+  after: '12:00'
+  before: '14:00'
+
+- platform: tod
+  name: Nachmittag
+  after: '14:00'
+  before: 'sunset'
+  before_offset: '01:00'
+
+- platform: tod
+  name: Abend
+  after: 'sunset'
+  before_offset: '01:00'
+  before: '23:00'
 
 - platform: tod
   name: Nacht
-  after: sunset
-  after_offset: '-02:00'
+  after: '23:00'
   before: sunrise
+  before_offset: '-00:30'

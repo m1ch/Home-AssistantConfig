@@ -31,9 +31,9 @@
         state: closed
   action:
     - service: cover.set_cover_position
-      position: 1.5
-      entity_id: 
-      - cover.zimmer1_rollo
+      data:
+        position: 1.5
+        entity_id: cover.zimmer1_rollo
 
 
 ### Rollo Zimmer 1 am Morgen

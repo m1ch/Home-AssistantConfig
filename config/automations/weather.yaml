@@ -17,9 +17,9 @@
     - service:   input_boolean.turn_on
       entity_id:
         - input_boolean.high_wind
-    - service: notify.matrix_emi
+    - service: notify.matrix_notify
       data:
-        message:  >
+        message: >
           Die Windgeschwindigkeit betraegt
           {{states.sensor.zamg_wind_speed.state_with_unit}} und
           Winböhen von
@@ -38,7 +38,7 @@
         - cover.wohnraum_rollo_coutch
 
 - id: open_blind_if_wind2
-  alias: 'Rolllaeden bei Wind automatisch öffnen'
+  alias: 'Rolllaeden bei Wind automatisch öffnen - test'
   initial_state: 'on'
   trigger:
     - platform: state

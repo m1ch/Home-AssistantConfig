@@ -410,8 +410,6 @@ views:
         show_header_toggle: false
         title: Automation
 
-
-
   - title: Infrastruktur
     path: infrastructure
     icon: mdi:server-network
@@ -471,17 +469,6 @@ views:
           - automation.gps_update
         show_header_toggle: false
         title: All Automations
-
-      - type: entities
-        entities:
-          - group.all_sceens
-          - group.all_automations
-        show_header_toggle: true
-        title: automation
-
-
-
-
 
   - title: PLAY
     icon: mdi:cards-playing-outline

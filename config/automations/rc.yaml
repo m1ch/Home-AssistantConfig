@@ -17,8 +17,16 @@
       data:
         topic:     "/hass/debug"
         payload:   "TRIGGER: RC1 RL schliesen"
-    - service:    scene.turn_on
-      entity_id:  scene.all_blinds_closed
+    - service: cover.close_cover
+      entity_id: 
+      - cover.bad_rollo
+      - cover.schlafzimmer_rollo_links
+      - cover.schlafzimmer_rollo_mitte
+      - cover.schlafzimmer_rollo_rechts
+      - cover.wohnraum_rollo_coutch
+      - cover.wohnraum_rollo_kochen
+      - cover.zimmer1_rollo
+      - cover.zimmer2_rollo
 
 ### Alle Rollläden mit fehrnbedienung öffnen
 - id: open_all_blind_with_rc1
@@ -29,8 +37,17 @@
     topic: /RC1/B02_short
     payload: 'ON'
   action:
-    service:    scene.turn_on
-    entity_id:  scene.all_blinds_opened
+    - service: cover.close_cover
+      entity_id: 
+      - cover.bad_rollo
+      - cover.schlafzimmer_rollo_links
+      - cover.schlafzimmer_rollo_mitte
+      - cover.schlafzimmer_rollo_rechts
+      - cover.wohnraum_rollo_coutch
+      - cover.wohnraum_rollo_essen
+      - cover.wohnraum_rollo_kochen
+      - cover.zimmer1_rollo
+      - cover.zimmer2_rollo
 
 ### Alle lichter mit fernbedienung ausschalten
 - id: rc1_all_lights_off
@@ -41,6 +58,19 @@
     topic: /RC1/B03_short
     payload: 'ON'
   action:
-    service:    scene.turn_on
-    entity_id:  scene.all_lights_off
-
+    - service: light.turn_off
+      entity_id:
+      - light.badezimmer
+      - light.badezimmer_spiegel
+      - light.diele_hauptlicht
+      - light.kuche_abwasch
+      - light.kuche_insel
+      - light.schlafzimmer
+      - light.schlafzimmer_eva
+      - light.schlafzimmer_michi
+      - light.stehlampe_coutch
+      - light.wc
+      - light.wohnzimmer_essecke
+      - light.wohnzimmer_licht
+      - light.zimmer_1
+      - light.zimmer_2

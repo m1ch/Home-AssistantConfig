@@ -12,8 +12,6 @@
       entity_id: sensor.zamg_wind_speed
       above: 35
   action:
-    # - service:    scene.turn_on
-    #   entity_id:  scene.all_blinds_opened
     - service:   input_boolean.turn_on
       entity_id:
         - input_boolean.high_wind
@@ -75,8 +73,13 @@
         entity_id: sensor.yr_wind_speed
         below: 10
   action:
-    - service: scene.turn_on
-      entity_id: scene.east_blinds_closed
+    - service: cover.close_cover
+      entity_id:
+      - cover.schlafzimmer_rollo_mitte
+      - cover.schlafzimmer_rollo_rechts
+      - cover.wohnraum_rollo_kochen
+      - cover.zimmer1_rollo
+      - cover.zimmer2_rollo
     - service: notify.matrix_emi
       data:
         message:  >

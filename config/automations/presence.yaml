@@ -1,0 +1,313 @@
+# From https://philhawthorne.com/making-home-assistants-presence-detection-not-so-binary/
+
+- id: mark_just_arrived
+  alias: Mark person as just arrived
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.tel_mich
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.tel_eva
+      from: 'off'
+      to: 'on'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'binary_sensor.tel_mich' %}
+            input_select.mich_status_dropdown
+          {% else %}
+            input_select.eva_status_dropdown
+          {% endif %}
+        option: >
+          {% if trigger.entity_id == 'binary_sensor.tel_mich' %}
+            {% if states.input_select.mich_status_dropdown.state != 'Away' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% else %}
+            {% if states.input_select.eva_status_dropdown.state != 'Away' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% endif %}
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.people_status_dropdown
+        option: Present
+
+- id: mark_home
+  alias: Mark person as home
+  trigger:
+    - platform: state
+      entity_id: input_select.mich_status_dropdown
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.eva_status_dropdown
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.mich_status_dropdown
+      from: 'Just Left'
+      to: 'Just Arrived'
+    - platform: state
+      entity_id: input_select.eva_status_dropdown
+      from: 'Just Left'
+      to: 'Just Arrived'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'input_select.mich_status_dropdown' %}
+            input_select.mich_status_dropdown
+          {% else %}
+            input_select.eva_status_dropdown
+          {% endif %}
+        option: Home
+
+- id: mark_just_left
+  alias: Mark person as just left
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.tel_mich
+      from: 'on'
+      to: 'off'
+    - platform: state
+      entity_id: binary_sensor.tel_eva
+      from: 'on'
+      to: 'off'
+  condition:
+    condition: state
+    entity_id: input_select.entrance_status_dropdown
+    state: 'Just Closed'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'binary_sensor.tel_mich' %}
+            input_select.mich_status_dropdown
+          {% else %}
+            input_select.eva_status_dropdown
+          {% endif %}
+        option: 'Just Left'
+
+- id: mark_away
+  alias: Mark person as away
+  trigger:
+    - platform: state
+      entity_id: input_select.mich_status_dropdown
+      to: 'Just Left'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.eva_status_dropdown
+      to: 'Just Left'
+      for:
+        minutes: 10
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'input_select.mich_status_dropdown' %}
+            input_select.mich_status_dropdown
+          {% else %}
+            input_select.eva_status_dropdown
+          {% endif %}
+        option: Away
+    - delay: 0:00:05
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.people_status_dropdown
+        option: >
+          {% if states.input_select.mich_status_dropdown.state == 'Away' and
+                states.input_select.eva_status_dropdown.state == 'Away' %}
+            Absent
+          {% else %}
+            Present
+          {% endif %}
+
+- id: mark_extended_away
+  alias: Mark person as extended away
+  trigger:
+    - platform: state
+      entity_id: input_select.mich_status_dropdown
+      to: 'Away'
+      for:
+        hours: 24
+    - platform: state
+      entity_id: input_select.eva_status_dropdown
+      to: 'Away'
+      for:
+        hours: 24
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'input_select.mich_status_dropdown' %}
+            input_select.mich_status_dropdown
+          {% else %}
+            input_select.eva_status_dropdown
+          {% endif %}
+        option: 'Extended Away'
+
+#~ - id: mark_people_absent
+  #~ alias: 'Personen abwesend'
+  #~ initial_state: 'on'
+  #~ trigger:
+    #~ - platform: state
+      #~ entity_id: input_select.mich_status_dropdown
+      #~ to: 'Away'
+    #~ - platform: state
+      #~ entity_id: input_select.eva_status_dropdown
+      #~ to: 'Away'
+  #~ condition:
+    #~ condition: and
+    #~ conditions:
+      #~ - condition: state
+        #~ entity_id: input_select.mich_status_dropdown
+        #~ state: 'Away'
+      #~ - condition: state
+        #~ entity_id: input_select.eva_status_dropdown
+        #~ state: 'Away'
+  #~ action:
+    #~ - service: input_select.select_option
+      #~ data_template:
+        #~ entity_id: input_select.people_status_dropdown
+        #~ option: Absent
+
+# https://home-assistant.io/docs/automation/templating/#available-trigger-data
+- id: entrance_door_change
+  alias: 'Eingangstüre Statusaenderung'
+  initial_state: 'on'
+  trigger:
+    - platform: mqtt
+      topic: /DOOR_VZ1/State
+      payload: 'OPEN'
+    - platform: mqtt
+      topic: /DOOR_VZ1/State
+      payload: 'CLOSE'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          input_select.entrance_status_dropdown
+        option: >
+          {% if trigger.payload == 'OPEN' %}
+            Open
+          {% else %}
+            {% if states.input_select.entrance_status_dropdown.state != 'Closed' %}
+              Just Closed
+            {% else %}
+              Closed
+            {% endif %}
+          {% endif %}
+    #~ - service: notify.matrix_emi
+      #~ data:
+        #~ message: >
+          #~ Platform: mqtt \n
+          #~ Payload:  {{trigger.payload}}
+
+# https://home-assistant.io/docs/automation/templating/#available-trigger-data
+- id: entrance_door_satle
+  alias: 'Eingangstüre Statusaenderung Lang'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_select.entrance_status_dropdown
+      to: 'Open'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: input_select.entrance_status_dropdown
+      to: 'Just Closed'
+      for:
+        minutes: 10
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          input_select.entrance_status_dropdown
+        option: >
+          {% if states.input_select.entrance_status_dropdown.state == 'Open' %}
+            Long Open
+          {% else %}
+            Closed
+          {% endif %}
+    #~ - service: notify.matrix_emi
+      #~ data:
+        #~ message: >
+          #~ Platform: Status \n
+          #~ State:    {{states.input_select.entrance_status_dropdown.state}}
+
+
+          #~ {% if trigger.platform == 'mqtt' %}
+            #~ {% if trigger.payload == 'OPEN' %}
+              #~ Open
+            #~ {% else %}
+              #~ Just Closed
+            #~ {% endif %}
+          #~ {% else %}
+            #~ {% if states.input_select.entrance_status_dropdown.state == 'Open' %}
+              #~ Long Open
+            #~ {% else %}
+              #~ Closed
+            #~ {% endif %}
+          #~ {% endif %}
+##########################################################################
+- id: gps_update
+  alias: 'gps_update'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: sensor.location_mich_nc
+    - platform: mqtt
+      topic: /DOOR_VZ1/State
+      payload: 'ggggg'
+  action:
+    - service:   mqtt.publish
+      data_template:
+        topic: >
+          {% if trigger.entity_id == 'sensor.location_mich_nc' %}
+            owntracks/mich/nc
+          {% else %}
+            owntracks/eva/nc
+          {% endif %}
+        payload: >
+          {"_type":"location","tid":"ut","acc":{{states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.accuracy}},"batt":{{states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.batterylevel}},"conn":"w","lat":{{states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.lat}},"lon":{{states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.lon}},"tst":{{states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.timestamp}} }
+
+## MQTT test:
+#~ {"ad9e424f6d92cc4c91e9bbd469c91e24":{"Nokia 6.1":{"useragent":"PhoneTrack\/0.0.8","lat":47.0530884,"lon":15.4087418,"timestamp":1550856273,"batterylevel":25,"satellites":null,"accuracy":19.31,"altitude":null,"speed":null,"bearing":null}}}
+# mosquitto_pub -h mqtt.lan -p 1883 -t 'owntracks/mich/nc' -m '{"_type":"location","tid":"ut","acc":19.31,"batt":25,"conn":"w","lat":47.0530884,"lon":15.4087418,"tst":1550856273 }'
+
+
+        #~ >
+          #~ {% set my_test_json = {
+            #~ "_type":"location",
+            #~ "tid":"ut",
+            #~ "acc":states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.accuracy,
+            #~ "batt":states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.batterylevel,
+            #~ "conn":"w",
+            #~ "lat":states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.lat,
+            #~ "lon":states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.lon,
+            #~ "tst":states.sensor.location_mich_nc.attributes.ad9e424f6d92cc4c91e9bbd469c91e24.NK6.timestamp
+          #~ } %}{{my_test_json}}
+
+
+
+    #~ service: script.notify_mqtt
+    #~ data:
+      #~ test: "{{trigger.entity_id}}"
+      #~ target: >
+        #~ {% if trigger.entity_id == 'sensor.location_mich_nc' %}
+          #~ owntracks/mich/nc
+        #~ {% else %}
+          #~ owntracks/eva/nc
+        #~ {% endif %}
+      #~ message: "Dies ist ein test"
+

@@ -16,26 +16,6 @@
     - service: cover.open_cover
       entity_id:  cover.zimmer1_rollo
 
-- id: room_1_test
-  alias: 'Zimmer 1 test'
-  initial_state: 'on'
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.solar_angle
-    above: 0
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: cover.zimmer1_rollo
-        state: closed
-  action:
-    - service: cover.set_cover_position
-      data:
-        position: 1.5
-        entity_id: cover.zimmer1_rollo
-
-
 ### Rollo Zimmer 1 am Morgen
 - id: room_1_sunset
   alias: 'Sonnenuntergang im Zimmer 1'

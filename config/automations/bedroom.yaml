@@ -43,15 +43,20 @@
       - condition: state
         entity_id: cover.schlafzimmer_rollo_mitte
         state: closed
-      - condition: state
-        entity_id: cover.schlafzimmer_rollo_rechts
-        state: closed
+      # - condition: state
+      #   entity_id: cover.schlafzimmer_rollo_rechts
+      #   state: closed
   action:
-  - service: scene.turn_on
-    entity_id: scene.bedroom_at_morning
   - service: light.turn_off
     entity_id:
     - light.schlafzimmer
+  - service: cover.set_cover_position
+    data:
+      position: 1.5
+      entity_id: 
+      - cover.schlafzimmer_rollo_links
+      - cover.schlafzimmer_rollo_mitte
+  
 - id: bedroom_day
   alias: Schlafzimmer Rollos Öffnen
   initial_state: 'on'

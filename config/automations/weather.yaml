@@ -12,8 +12,8 @@
       entity_id: sensor.zamg_wind_speed
       above: 35
   action:
-    - service:    scene.turn_on
-      entity_id:  scene.all_blinds_opened
+    # - service:    scene.turn_on
+    #   entity_id:  scene.all_blinds_opened
     - service:   input_boolean.turn_on
       entity_id:
         - input_boolean.high_wind
@@ -25,6 +25,17 @@
           Winböhen von
           {{states.sensor.zamg_wind_max_speed.state_with_unit}}.
           Öffne die Rollos.
+    - service: cover.open_cover
+      entity_id: 
+        - cover.bad_rollo
+        - cover.schlafzimmer_rollo_links
+        - cover.schlafzimmer_rollo_mitte
+        - cover.schlafzimmer_rollo_rechts
+        - cover.zimmer1_rollo
+        - cover.zimmer2_rollo
+        - cover.wohnraum_rollo_kochen
+        - cover.wohnraum_rollo_essen
+        - cover.wohnraum_rollo_coutch
 
 - id: open_blind_if_wind2
   alias: 'Rolllaeden bei Wind automatisch öffnen'

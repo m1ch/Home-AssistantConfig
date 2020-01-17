@@ -1,28 +1,56 @@
 # The recorder component is storing details in a database
-purge_keep_days: 60
+purge_keep_days: 10
+db_url: !secret mysql_url
 exclude:
   domains:
     - automation
+    - cover
     - group
+    - input_datetime
     - history_graph
     - scene
+    - sun
+    - switch
     - weblink
+    - zone
   entities:
-     - updater.updater
-     - sun.sun
-     - sensor.time
-     - sensor.date
-     - sensor.moon
-     - sensor.sunset
-     - sensor.sunrise
-     - sensor.solar_angle
-     - sensor.season
-     - sensor.dusk
-     - sensor.dawn
-     - sensor.luft_mean
-     - sensor.speed_dl_mean
-     - sensor.speed_ping_mean
-     - sensor.speed_ul_mean
-     - sensor.yr_symbol
-     - binary_sensor.workday_sensor
-     - binary_sensor.solar_angle
+    - binary_sensor.workday_sensor
+    - binary_sensor.solar_angle
+    - binary_sensor.abend
+    - binary_sensor.mittag
+    - binary_sensor.morgen
+    - binary_sensor.nachmittag
+    - binary_sensor.nacht
+    - binary_sensor.updater
+    - binary_sensor.vormittag
+    # - binary_sensor.wind_high
+    # - binary_sensor.wind_med
+    - binary_sensor.workday_sensor
+    - sensor.dusk
+    - sensor.dawn
+    - sensor.moon
+    - sensor.season
+    - sensor.solar_angle
+    - sensor.sunrise
+    - sensor.sunset
+    - sensor.time
+    - sensor.yr_symbol
+    - sensor.waqi
+
+
+    #  - updater.updater
+    #  - sun.sun
+    #  - sensor.time
+    #  - sensor.date
+    #  - sensor.sunset
+    #  - sensor.sunrise
+    #  - sensor.solar_angle
+    #  - sensor.season
+    #  - sensor.dusk
+    #  - sensor.dawn
+    #  - sensor.luft_mean
+    #  - sensor.speed_dl_mean
+    #  - sensor.speed_ping_mean
+    #  - sensor.speed_ul_mean
+    #  - sensor.yr_symbol
+     

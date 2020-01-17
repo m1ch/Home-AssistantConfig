@@ -1,8 +1,9 @@
 - platform: mqtt
-  name: "MQTT SW 1"
-  state_topic: "plug_2216ED/stat/POWER"
-  command_topic: "plug_2216ED/cmnd/sonoff/power"
-  availability_topic: "plug_2216ED/tele/LWT"
+  name: "MQTT Schlafzimmer Sensor1"
+  state_topic: "plugs/zimmer0_1/POWER"
+  command_topic: "plugs/zimmer0_1/cmnd/POWER"
+  availability_topic: "plugs/zimmer0_1/LWT"
+  json_attributes_topic: "plugs/zimmer0_1/STATE"
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"
@@ -12,9 +13,10 @@
 
 - platform: mqtt
   name: "Switch Vac"
-  state_topic: "plug_222C60/stat/POWER"
-  command_topic: "plug_222C60/cmnd/sonoff/power"
-  availability_topic: "plug_222C60/tele/LWT"
+  state_topic: "plugs/vac00/POWER"
+  command_topic: "plugs/vac00/cmnd/POWER"
+  availability_topic: "plugs/vac00/LWT"
+  json_attributes_topic: "plugs/vac00/STATE"
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"
@@ -23,10 +25,24 @@
   retain: false
 
 - platform: mqtt
-  name: "MQTT SW 3"
-  state_topic: "plug_2F5AE8/stat/POWER"
-  command_topic: "plug_2F5AE8/cmnd/sonoff/power"
-  availability_topic: "plug_2F5AE8/tele/LWT"
+  name: "Switch Modem"
+  state_topic: "plugs/modem/POWER"
+  command_topic: "plugs/modem/cmnd/POWER"
+  availability_topic: "plugs/modem/LWT"
+  json_attributes_topic: "plugs/modem/STATE"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+
+- platform: mqtt
+  name: "MQTT Zimmer1 Sensor1"
+  state_topic: "plugs/zimmer1_1/POWER"
+  command_topic: "plugs/zimmer1_1/cmnd/POWER"
+  availability_topic: "plugs/zimmer1_1/LWT"
+  json_attributes_topic: "plugs/zimmer1_1/STATE"
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"

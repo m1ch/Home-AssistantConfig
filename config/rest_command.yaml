@@ -28,16 +28,17 @@ rest_send_luftdaten_dust:
   verify_ssl: true
 
 rest_send_luftdaten_htp:
-  url: https://api.luftdaten.info/v1/push-sensor-data/
+  url: https://api.sensor.community/v1/push-sensor-data/
   method: POST
   headers:
     X-PIN: 11
     X-Sensor: !secret esp_id
-  payload: '{"software_version": "Home-Assistant 0.9",
-             "sensordatavalues": [
-               { "value_type": "temperature", "value": {{ states("sensor.terasse_temperature") }} },
-               { "value_type": "humidity", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} },
-               { "value_type": "pressure", "value": {{ states("sensor.terasse_luftruck") }} }]}'
+  # payload: '{"software_version": "Home-Assistant 0.9",
+  #            "sensordatavalues": [
+  #              { "value_type":"temperature","value":{{ states("sensor.terasse_temperature") }} },
+  #              { "value_type":"pressure","value":{{ states("sensor.terasse_luftruck") }} },
+  #              { "value_type":"humidity","value":{{ states("sensor.terasse_luftfeuchtigkeit") }} }]}'
+  payload: '{"software_version":"Home-Assistant 0.9","sensordatavalues":[{"value_type":"temperature","value":"{{ states("sensor.terasse_temperature") }}"},{"value_type":"pressure","value":"{{ states("sensor.terasse_luftruck") }}"},{"value_type":"humidity","value":"{{ states("sensor.terasse_luftfeuchtigkeit") }}"}]}'
   content_type:  'application/json; charset=utf-8'
   verify_ssl: true
 

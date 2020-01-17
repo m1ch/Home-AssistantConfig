@@ -20,7 +20,37 @@
       friendly_name: "YR Windspeed "
       unit_of_measurement: 'km/h'
       value_template: "{{ states('sensor.yr_wind_speed')| float  * 3600 / 1000 | round(2) }}"
-    template_sensor_00001:
-      friendly_name: "terasse luftruck"
-      unit_of_measurement: 'hPa'
-      value_template: "{{ states.sensor.terasse_luftruck.state | float * 1.046872616 | round(2) }}"
+  
+  # sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria
+  # sensor.waqi_gaswerkstrasse_13_bez_eggenberg_austria
+    waqi_don_bosco_co:
+      value_template: "{{ state_attr('sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria', 'co') }}"
+      unit_of_measurement: 'ppm'
+    waqi_don_bosco_no2:
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "nitrogen_dioxide") }}'
+      unit_of_measurement: 'ppm'
+    waqi_don_bosco_so2:
+      # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.sulfur_dioxide }}"
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "sulfur_dioxide") }}'
+      unit_of_measurement: 'ppm'
+    waqi_don_bosco_humidity:
+      # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.humidity }}"
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "humidity") }}'
+      unit_of_measurement: '%'
+    waqi_don_bosco_temperature:
+      # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.temperature }}"
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "temperature") }}'
+      unit_of_measurement: '°C'
+    waqi_don_bosco_wind:
+      # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.w }}"
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "w") }}'
+      unit_of_measurement: 'm/s'
+    waqi_don_bosco_feinstaub_pm_10:
+      # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.pm_10 }}"
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "pm_10") }}'
+      unit_of_measurement: 'µg/m³'
+    waqi_gaswerkstrasse_feinstaub_pm_10:
+      # value_template: "{{ sensor.waqi_gaswerkstrasse_13_bez_eggenberg_austria.attributes.pm_10 }}"
+      value_template: '{{ state_attr("sensor.waqi_gaswerkstrasse_13_bez_eggenberg_austria", "pm_10") }}'
+      unit_of_measurement: 'µg/m³'
+    

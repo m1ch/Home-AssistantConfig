@@ -1,7 +1,0 @@
-notify_mqtt:
-  sequence:
-    - service: mqtt.publish
-      data_template:
-        payload: "{{ message }} --- {{test}}"
-        topic: "{{ target }}"
-        retain: true

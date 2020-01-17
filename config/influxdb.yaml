@@ -3,32 +3,58 @@ username: home-assistant
 password: !secret influx_pw
 max_retries: 3
 default_measurement: state
+database: "home_assistant"
+include:
+  domains: 
+    - sensor
+    - weather
 exclude:
   entities:
-     - updater.updater
-     - sun.sun
-     - sensor.time
-     - sensor.date
-     - sensor.moon
-     - sensor.sunset
-     - sensor.sunrise
-     - sensor.solar_angle
-     - sensor.season
-     - sensor.dusk
-     - sensor.dawn
-     - sensor.luft_mean
-     - sensor.speed_dl_mean
-     - sensor.speed_ping_mean
-     - sensor.speed_ul_mean
-     - sensor.yr_symbol
-     - binary_sensor.workday_sensor
-     - binary_sensor.solar_angle
-  domains:
-     - automation
-     - group
-     - updater
-     - history_graph
-     - scene
+    - sensor.moon
+    - sensor.season
+    - sensor.solar_angle
+    - sensor.sunrise
+    - sensor.sunset
+    - sensor.time
+    - sensor.yr_symbol
+    - sensor.dusk
+    - sensor.dawn
+    - sensor.waqi
+component_config:
+  sensor.processor_use:
+    override_measurement: cpu
+  sensor.memory_free:
+    override_measurement: cpu
+  sensor.yr_cloudiness:
+    override_measurement: sun
+  sensor.zamg_sun_last_hour:
+    override_measurement: sun
+  sensor.zamg_dewpoint:
+    override_measurement: temperature
+  sensor.speedtest_download:
+    override_measurement: internet
+  sensor.speedtest_upload:
+    override_measurement: internet
+  sensor.speedtest_ping:
+    override_measurement: internet
+  
+
+component_config_glob:
+  sensor.*humidity:
+    override_measurement: humidity
+  sensor.*feuchtigkeit:
+    override_measurement: humidity
+  sensor.*temperatur*:
+    override_measurement: temperature
+  sensor.*precipitation:  
+    override_measurement: precipitation
+  sensor.*wind*:  
+    override_measurement: wind
+  sensor.*feinstaub*:  
+    override_measurement: dust
+  sensor.luftdaten*_p*:  
+    override_measurement: dust
+     
 #~ tags:
   #~ instance: prod
   #~ source: hass

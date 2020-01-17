@@ -1,13 +1,13 @@
 - platform: mqtt
   name: "Schlafzimmer Temperatur"
-  state_topic: "plug_2216ED/tele/SENSOR"
+  state_topic: "plugs/zimmer0_1/SENSOR"
   unit_of_measurement: '°C'
   value_template: "{{ value_json.AM2301.Temperature }}"
   json_attributes_topic:
     AM2301
 - platform: mqtt
   name: "Schlafzimmer Feuchtigkeit"
-  state_topic: "plug_2216ED/tele/SENSOR"
+  state_topic: "plugs/zimmer0_1/SENSOR"
   unit_of_measurement: '%'
   value_template: "{{ value_json.AM2301.Humidity }}"
   json_attributes_topic:
@@ -15,14 +15,14 @@
 
 - platform: mqtt
   name: "Zimmer1 Temperatur"
-  state_topic: "plug_2F5AE8/tele/SENSOR"
+  state_topic: "plugs/zimmer1_1/SENSOR"
   unit_of_measurement: '°C'
   value_template: "{{ value_json.AM2301.Temperature }}"
   json_attributes_topic:
     AM2301
 - platform: mqtt
   name: "Zimmer1 Feuchtigkeit"
-  state_topic: "plug_2F5AE8/tele/SENSOR"
+  state_topic: "plugs/zimmer1_1/SENSOR"
   unit_of_measurement: '%'
   value_template: "{{ value_json.AM2301.Humidity }}"
   json_attributes_topic:

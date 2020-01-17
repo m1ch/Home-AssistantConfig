@@ -2,169 +2,158 @@
 
 - platform: mqtt
   name: "Bad Rollo"
-  command_topic:      '/BR/BLIND1/set'
-  position_topic:     '/BR/BLIND1/level'
-  set_position_topic: '/BR/BLIND1/pct'
-  state_topic:        '/BR/BLIND1/State'
-  value_template:     '{{ ( value | round(0) )}}'
-  qos: 0
-#  retain: true
-  payload_open:  "open"
-  payload_close: "close"
-  payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
-  optimistic: false
-
-- platform: mqtt
-  name: "Schlafzimmer Rollo links"
-  command_topic:      '/Z1/BLIND1/set'
-  position_topic:     '/Z1/BLIND1/level'
-  set_position_topic: '/Z1/BLIND1/pct'
-  state_topic:        '/Z1/BLIND1/State'
-  value_template:     '{{ ( value | round(0) )}}'
-  qos: 0
-#  retain: true
-  payload_open:  "open"
-  payload_close: "close"
-  payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
-  optimistic: false
-
-- platform: mqtt
-  name: "Schlafzimmer Rollo mitte"
-  command_topic:      '/Z1/BLIND2/set'
-  position_topic:     '/Z1/BLIND2/level'
-  set_position_topic: '/Z1/BLIND2/pct'
-  state_topic:        '/Z1/BLIND2/State'
-  value_template:     '{{ ( value | round(0) )}}'
-  qos: 0
-#  retain: true
-  payload_open:  "open"
-  payload_close: "close"
-  payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
-  optimistic: false
-
-- platform: mqtt
-  name: "Schlafzimmer Rollo rechts"
-  command_topic:      '/Z1/BLIND3/set'
-  position_topic:     '/Z1/BLIND3/level'
-  set_position_topic: '/Z1/BLIND3/pct'
-  state_topic:        '/Z1/BLIND3/State'
-  value_template:     '{{ ( value | round(0) )}}'
-  qos: 0
-#  retain: true
-  payload_open:  "open"
-  payload_close: "close"
-  payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
-  optimistic: false
-
-- platform: mqtt
-  name: "Zimmer1 Rollo"
-  command_topic:      '/Z2/BLIND1/set'
-  position_topic:     '/Z2/BLIND1/ppct'
-  set_position_topic: '/Z2/BLIND1/pct'
-#  tilt_command_topic: '/Z2/BLIND1/set'
-#  tilt_status_topic:  '/Z2/BLIND1/State'
+  availability_topic: 'shellies/blind-bad_1/online'
+  command_topic:      'shellies/blind-bad_1/roller/0/command'
+  position_topic:     'shellies/blind-bad_1/roller/0/pos'
+  set_position_topic: 'shellies/blind-bad_1/roller/0/command/pos'
   value_template:     '{{ ( value | round(0) )}}'
   qos: 0
   retain: false
   payload_open:  "open"
   payload_close: "close"
   payload_stop:  "stop"
-  #~ state_open:    100
-  #~ state_closed:  0
+  payload_available: 'true'
+  payload_not_available: 'false'
   position_open: 100
   position_closed: 0
   optimistic: false
-#  tilt_status_optimistic: true
-#  tilt_closed_value: 'm'
-#  tilt_opened_value: "p"
-- platform: mqtt
-  name: "MQTT Cover"
-  command_topic: "home-assistant/cover/set"
-  position_topic: "home-assistant/cover/position"
-  availability_topic: "home-assistant/cover/availability"
-  set_position_topic: "home-assistant/cover/set_position"
-  qos: 0
-  retain: true
-  payload_open: "OPEN"
-  payload_close: "CLOSE"
-  payload_stop: "STOP"
-  position_open: 100
-  position_closed: 0
-  payload_available: "online"
-  payload_not_available: "offline"
-  optimistic: false
-  value_template: '{{ value.x }}'
-
 
 - platform: mqtt
-  name: "Zimmer2 Rollo"
-  command_topic:      '/Z3/BLIND1/set'
-  position_topic:     '/Z3/BLIND1/level'
-  set_position_topic: '/Z3/BLIND1/pct'
-  state_topic:        '/Z3/BLIND1/State'
+  name: "Schlafzimmer Rollo links"
+  availability_topic: 'shellies/blind-zimmer0_1/online'
+  command_topic:      'shellies/blind-zimmer0_1/roller/0/command'
+  position_topic:     'shellies/blind-zimmer0_1/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer0_1/roller/0/command/pos'
   value_template:     '{{ ( value | round(0) )}}'
   qos: 0
-#  retain: true
+  retain: false
   payload_open:  "open"
   payload_close: "close"
   payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
+  payload_available: 'true'
+  payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
+  optimistic: false
+
+- platform: mqtt
+  name: "Schlafzimmer Rollo mitte"
+  availability_topic: 'shellies/blind-zimmer0_2/online'
+  command_topic:      'shellies/blind-zimmer0_2/roller/0/command'
+  position_topic:     'shellies/blind-zimmer0_2/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer0_2/roller/0/command/pos'
+  value_template:     '{{ ( value | round(0) )}}'
+  qos: 0
+  retain: false
+  payload_open:  "open"
+  payload_close: "close"
+  payload_stop:  "stop"
+  payload_available: 'true'
+  payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
+  optimistic: false
+
+- platform: mqtt
+  name: "Schlafzimmer Rollo rechts"
+  availability_topic: 'shellies/blind-zimmer0_3/online'
+  command_topic:      'shellies/blind-zimmer0_3/roller/0/command'
+  position_topic:     'shellies/blind-zimmer0_3/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer0_3/roller/0/command/pos'
+  value_template:     '{{ ( value | round(0) )}}'
+  qos: 0
+  retain: false
+  payload_open:  "open"
+  payload_close: "close"
+  payload_stop:  "stop"
+  payload_available: 'true'
+  payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
+  optimistic: false
+
+- platform: mqtt
+  name: "Zimmer1 Rollo"
+  # availability_topic: 'shellies/blind-zimmer1_1/online'
+  command_topic:      'shellies/blind-zimmer1_1/roller/0/command'
+  position_topic:     'shellies/blind-zimmer1_1/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer1_1/roller/0/command/pos'
+  value_template:     '{{ ( value | round(0) )}}'
+  qos: 0
+  retain: false
+  payload_open:  "open"
+  payload_close: "close"
+  payload_stop:  "stop"
+  # payload_available: 'true'
+  # payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
+  optimistic: false
+  
+- platform: mqtt
+  name: "Zimmer2 Rollo"
+  # availability_topic: 'shellies/blind-zimmer2_1/online'
+  command_topic:      'shellies/blind-zimmer2_1/roller/0/command'
+  position_topic:     'shellies/blind-zimmer2_1/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer2_1/roller/0/command/pos'
+  qos: 0
+  retain: false
+  payload_open:  "open"
+  payload_close: "close"
+  payload_stop:  "stop"
+  # payload_available: 'true'
+  # payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
   optimistic: false
 
 - platform: mqtt
   name: "Wohnraum Rollo Kochen"
-  command_topic:      '/Z4/BLIND1/set'
-  position_topic:     '/Z4/BLIND1/level'
-  set_position_topic: '/Z4/BLIND1/pct'
-  state_topic:        '/Z4/BLIND1/State'
-  value_template:     '{{ ( value | round(0) )}}'
+  availability_topic: 'shellies/blind-zimmer3_1/online'
+  command_topic:      'shellies/blind-zimmer3_1/roller/0/command'
+  position_topic:     'shellies/blind-zimmer3_1/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer3_1/roller/0/command/pos'
   qos: 0
-#  retain: true
+  retain: false
   payload_open:  "open"
   payload_close: "close"
   payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
+  payload_available: 'true'
+  payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
   optimistic: false
 
 - platform: mqtt
   name: "Wohnraum Rollo Essen"
-  command_topic:      '/Z4/BLIND2/set'
-  position_topic:     '/Z4/BLIND2/level'
-  set_position_topic: '/Z4/BLIND2/pct'
-  state_topic:        '/Z4/BLIND2/State'
-  value_template:     '{{ ( value | round(0) )}}'
+  availability_topic: 'shellies/blind-zimmer3_2/online'
+  command_topic:      'shellies/blind-zimmer3_2/roller/0/command'
+  position_topic:     'shellies/blind-zimmer3_2/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer3_2/roller/0/command/pos'
   qos: 0
-#  retain: true
+  retain: false
   payload_open:  "open"
   payload_close: "close"
   payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
+  payload_available: 'true'
+  payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
   optimistic: false
 
 - platform: mqtt
   name: "Wohnraum Rollo Coutch"
-  command_topic:      '/Z4/BLIND3/set'
-  position_topic:     '/Z4/BLIND3/level'
-  set_position_topic: '/Z4/BLIND3/pct'
-  state_topic:        '/Z4/BLIND3/State'
-  value_template:     '{{ ( value | round(0) )}}'
+  # availability_topic: 'shellies/blind-zimmer3_3/online'
+  command_topic:      'shellies/blind-zimmer3_3/roller/0/command'
+  position_topic:     'shellies/blind-zimmer3_3/roller/0/pos'
+  set_position_topic: 'shellies/blind-zimmer3_3/roller/0/command/pos'
   qos: 0
-#  retain: true
+  retain: false
   payload_open:  "open"
   payload_close: "close"
   payload_stop:  "stop"
-  state_open:    "open"
-  state_closed:  "close"
+  # payload_available: 'true'
+  # payload_not_available: 'false'
+  position_open: 100
+  position_closed: 0
   optimistic: false
-

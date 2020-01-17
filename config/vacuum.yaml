@@ -1,6 +1,5 @@
-vacuum:
-  - platform: xiaomi_miio
-    name: "Mr. Williams"
-    host: vac01.lan
-    token:  39695250446e7874664e593758546e5a
-    
+# Roborock S5
+- platform: xiaomi_miio
+  name:  !secret vac01_name
+  host:  "vac01.lan"
+  token: !secret vac01_tok

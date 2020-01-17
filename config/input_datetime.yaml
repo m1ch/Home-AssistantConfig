@@ -6,3 +6,7 @@ wecker_we:
   name: Wochenendwecker
   has_time: true
 
+vac00_charge:
+  name: Staubsauger Ladedauer
+  has_date: false
+  has_time: true

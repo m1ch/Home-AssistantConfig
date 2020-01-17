@@ -1,8 +1,0 @@
-- name: !secret p1_name
-  id: !secret p1_id
-  device_trackers:
-    - device_tracker.tracker_ping_p1
-- name: !secret p2_name
-  id: !secret p2_id
-  device_trackers:
-    - device_tracker.tracker_ping_p2

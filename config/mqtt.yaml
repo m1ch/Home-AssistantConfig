@@ -6,7 +6,7 @@ username: !secret mqtt_user
 password: !secret mqtt_pw
 protocol: 3.1
 discovery: true
-discovery_prefix: hass
+# discovery_prefix: hass
 birth_message:
   topic: 'hass/status'
   payload: 'online'

@@ -33,8 +33,9 @@
   #~ name: "Luft Qualitaet"
   token: !secret waqi_token
   locations:
-  - don-bosco
-
+    - don-bosco
+    - gaswerkstrasse
+    
 - platform: mqtt
   name: "Terasse Temperature"
   state_topic: !secret weather_station_topic
@@ -53,7 +54,8 @@
   name: "Terasse Luftruck"
   state_topic: !secret weather_station_topic
   unit_of_measurement: 'hPa'
-  value_template: "{{ value_json.BME280.Pressure }}"
+  # p0 = p(h)/e^(-h/7991); 1/e^(-h/7991) ~ 1.046872616
+  value_template: "{{ value_json.BME280.Pressure | float * 1.046872616 | round(2) }}"
   json_attributes_topic:
     BME280
 - platform: mqtt

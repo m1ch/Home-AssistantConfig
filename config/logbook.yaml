@@ -1,13 +1,14 @@
 # View all events in a logbook
-exclude:
-  #~ entities:
-    #~ - sensor.last_boot
-    #~ - sensor.date
-  domains:
-    - sun
-    - weblink
-    - automation
-    - group
+# exclude:
+  # entities:
+  #   # sensor.time
+  #   #~ - sensor.last_boot
+  #   #~ - sensor.date
+  # domains:
+  #   - sun
+  #   - weblink
+  #   - automation
+  #   - group
 #~ include:
   #~ domains:
     #~ - sensor

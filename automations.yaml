@@ -1,1 +1,80 @@
-[]
+- id: '1578593561232'
+  alias: luftdaten.info update
+  description: ''
+  trigger:
+  - minutes: /5
+    platform: time_pattern
+  condition: []
+  action:
+  - service: rest_command.rest_send_luftdaten_all
+  - service: rest_command.rest_send_luftdaten_dust
+  - service: rest_command.rest_send_luftdaten_htp
+  - service: rest_command.rest_send_hass_all
+- id: '1578750026956'
+  alias: Vac00 turn off
+  description: ''
+  trigger:
+  - entity_id: switch.switch_vac
+    for: '12:00:00'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - entity_id: switch.switch_vac
+    service: switch.turn_off
+- id: '1578751654792'
+  alias: High wind
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.wind_high
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - entity_id:
+    - cover.bad_rollo
+    - cover.schlafzimmer_rollo_links
+    - cover.schlafzimmer_rollo_mitte
+    - cover.schlafzimmer_rollo_rechts
+    - cover.zimmer1_rollo
+    - cover.zimmer2_rollo
+    - cover.wohnraum_rollo_kochen
+    - cover.wohnraum_rollo_essen
+    - cover.wohnraum_rollo_coutch
+    service: cover.open_cover
+- id: '1578751937373'
+  alias: Startup
+  description: ''
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - entity_id: switch.switch_modem
+    service: switch.turn_on
+- id: '1578852022433'
+  alias: Sonnenaufgang im Wohnzimmer
+  description: ''
+  trigger:
+  - above: '0'
+    entity_id: sensor.solar_angle
+    platform: numeric_state
+  condition: []
+  action:
+  - entity_id: cover.wohnraum_rollo_kochen
+    service: cover.open_cover
+  - entity_id: cover.wohnraum_rollo_coutch
+    service: cover.open_cover
+  - entity_id: cover.wohnraum_rollo_essen
+    service: cover.open_cover
+- id: '1578864987416'
+  alias: Sonnenuntergang im Wohnzimmer
+  description: ''
+  trigger:
+  - event: sunset
+    offset: 00:30
+    platform: sun
+  condition: []
+  action:
+  - entity_id: cover.wohnraum_rollo_coutch
+    service: cover.close_cover

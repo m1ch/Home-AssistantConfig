@@ -1,0 +1,16 @@
+- platform: generic_thermostat
+  name: luftbefeuchter_schlafzimmer
+  heater: switch.mqtt_plug05
+  target_sensor: sensor.hum01
+  min_temp: 40
+  max_temp: 65
+  ac_mode: false
+  target_temp: 50
+  cold_tolerance: 5
+  hot_tolerance: 5
+  min_cycle_duration:
+    minutes: 10
+  initial_hvac_mode: "off"
+  away_temp: 16
+  precision: 1.0
+  

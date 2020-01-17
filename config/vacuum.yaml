@@ -1,0 +1,6 @@
+vacuum:
+  - platform: xiaomi_miio
+    name: "Mr. Williams"
+    host: vac01.lan
+    token:  39695250446e7874664e593758546e5a
+    

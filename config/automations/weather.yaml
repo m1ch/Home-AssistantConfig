@@ -100,4 +100,12 @@
   - service: rest_command.rest_send_to_dump01
   - service: rest_command.rest_send_to_dump02
   - service: rest_command.rest_send_to_dump03
-  
+
+- id: 'senslog01'
+  alias: SensorLogger.update-dust
+  trigger:
+  - entity_id: sensor.terasse_luftruck
+    platform: state
+  condition: []
+  action:
+  - service: rest_command.rest_send_hass_all

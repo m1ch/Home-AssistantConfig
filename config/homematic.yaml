@@ -1,0 +1,3 @@
+interfaces:
+    rf:
+        host: fhem.lan

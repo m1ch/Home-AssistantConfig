@@ -95,6 +95,7 @@ input_boolean:    !include config/input_boolean.yaml
 input_select:     !include config/input_select.yaml
 input_datetime:   !include config/input_datetime.yaml
 timer:            !include config/timer.yaml
+homematic:        !include config/homematic.yaml
 
 automation:       !include automations.yaml
 automation old:   !include_dir_merge_list config/automations

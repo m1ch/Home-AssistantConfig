@@ -1,0 +1,8 @@
+{
+    "domain": "rest_device_tracker",
+    "name": "Radarr Upcoming Media",
+    "documentation": "https://github.com/custom-components/rest.device_tracker",
+    "dependencies": [],
+    "codeowners": ["@m1ch"],
+    "requirements": []
+}

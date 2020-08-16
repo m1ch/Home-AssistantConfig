@@ -6,9 +6,13 @@
 !*.yaml
 !.gitignore
 !*.md
+!*.py
+!*.json
 
 !config/
 !config/*/
+!custom_components
+!custom_components/*
 
 # Ignore folders.
 .storage
@@ -20,3 +24,4 @@ ip_bans.yaml
 secrets.yaml
 known_devices.yaml
 config/device_tracker.1.yaml
+

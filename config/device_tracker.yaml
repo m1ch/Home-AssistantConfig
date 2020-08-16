@@ -1,4 +1,4 @@
-- platform: ping
-  hosts:
-    tracker_ping_p1: !secret p1_ip_tel
-    tracker_ping_p2: !secret p2_ip_tel
+# - platform: ping
+#   hosts:
+#     tracker_ping_p1: !secret p1_ip_tel
+#     tracker_ping_p2: !secret p2_ip_tel

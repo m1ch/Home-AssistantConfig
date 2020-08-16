@@ -6,11 +6,11 @@ rest_send_luftdaten_all:
     X-Sensor: !secret esp_id
   payload: '{"software_version": "Home-Assistant 0.9",
              "sensordatavalues": [
-               {"value_type": "SDS_P1", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
-               {"value_type": "SDS_P2", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} },
-               {"value_type": "BME280_temperature", "value": {{ states("sensor.terasse_temperature") }} },
+               {"value_type": "SDS_P1", "value": {{ states("sensor.pm_10") }} },
+               {"value_type": "SDS_P2", "value": {{ states("sensor.pm_25") }} },
+               {"value_type": "BME280_temperature", "value": {{ states("sensor.temperature") }} },
                {"value_type": "BME280_pressure", "value": {{ states("sensor.terasse_luftruck") }} },
-               {"value_type": "BME280_humidity", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} }]}'
+               {"value_type": "BME280_humidity", "value": {{ states("sensor.humidity") }} }]}'
   content_type:  'application/json; charset=utf-8'
   verify_ssl: true
 
@@ -22,8 +22,8 @@ rest_send_luftdaten_dust:
     X-Sensor: !secret esp_id
   payload: '{"software_version": "Home-Assistant 0.9",
              "sensordatavalues": [
-               { "value_type": "P1", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
-               { "value_type": "P2", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} }]}'
+               { "value_type": "P1", "value": {{ states("sensor.pm_10") }} },
+               { "value_type": "P2", "value": {{ states("sensor.pm_25") }} }]}'
   content_type:  'application/json; charset=utf-8'
   verify_ssl: true
 
@@ -38,7 +38,7 @@ rest_send_luftdaten_htp:
   #              { "value_type":"temperature","value":{{ states("sensor.terasse_temperature") }} },
   #              { "value_type":"pressure","value":{{ states("sensor.terasse_luftruck") }} },
   #              { "value_type":"humidity","value":{{ states("sensor.terasse_luftfeuchtigkeit") }} }]}'
-  payload: '{"software_version":"Home-Assistant 0.9","sensordatavalues":[{"value_type":"temperature","value":"{{ states("sensor.terasse_temperature") }}"},{"value_type":"pressure","value":"{{ states("sensor.terasse_luftruck") }}"},{"value_type":"humidity","value":"{{ states("sensor.terasse_luftfeuchtigkeit") }}"}]}'
+  payload: '{"software_version":"Home-Assistant 0.9","sensordatavalues":[{"value_type":"temperature","value":"{{ states("sensor.temperature") }}"},{"value_type":"pressure","value":"{{ states("sensor.terasse_luftruck") }}"},{"value_type":"humidity","value":"{{ states("sensor.humidity") }}"}]}'
   content_type:  'application/json; charset=utf-8'
   verify_ssl: true
 
@@ -97,9 +97,9 @@ rest_send_hass_all:
     Accept: application/json
   payload: '{"deviceId":"1234",
              "data": [
-               {"dataTypeId": "3", "value": {{ states("sensor.terasse_feinstaub_10um") }} },
-               {"dataTypeId": "4", "value": {{ states("sensor.terasse_feinstaub_2_5um") }} },
-               {"dataTypeId": "5", "value": {{ states("sensor.terasse_temperature") }} },
+               {"dataTypeId": "3", "value": {{ states("sensor.pm_10") }} },
+               {"dataTypeId": "4", "value": {{ states("sensor.pm_25") }} },
+               {"dataTypeId": "5", "value": {{ states("sensor.temperature") }} },
                {"dataTypeId": "6", "value": {{ states("sensor.terasse_luftruck") }} },
-               {"dataTypeId": "7", "value": {{ states("sensor.terasse_luftfeuchtigkeit") }} }]}'
+               {"dataTypeId": "7", "value": {{ states("sensor.humidity") }} }]}'
                

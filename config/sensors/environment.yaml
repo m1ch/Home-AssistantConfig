@@ -16,6 +16,7 @@
     - dewpointTemperature
 
 - platform: zamg
+  name: Graz Flughafen
   monitored_conditions:
     - temperature
     - humidity
@@ -29,6 +30,25 @@
     - precipitation
     - dewpoint
 
+
+- platform: zamg
+  station_id: 11290
+  name: Graz Universität
+  monitored_conditions:
+    - temperature
+    - humidity
+
+- platform: zamg
+  station_id: 11241
+  name: Schöckl
+  monitored_conditions:
+    - temperature
+    - humidity
+    - wind_speed
+    - wind_bearing
+    - wind_max_speed
+    - precipitation
+
 - platform: waqi
   #~ name: "Luft Qualitaet"
   token: !secret waqi_token
@@ -36,42 +56,54 @@
     - don-bosco
     - gaswerkstrasse
     
-- platform: mqtt
-  name: "Terasse Temperature"
-  state_topic: !secret weather_station_topic
-  unit_of_measurement: '°C'
-  value_template: "{{ value_json.BME280.Temperature }}"
-  json_attributes_topic:
-    BME280
-- platform: mqtt
-  name: "Terasse Luftfeuchtigkeit"
-  state_topic: !secret weather_station_topic
-  unit_of_measurement: '%'
-  value_template: "{{ value_json.BME280.Humidity }}"
-  json_attributes_topic:
-    BME280
-- platform: mqtt
-  name: "Terasse Luftruck"
-  state_topic: !secret weather_station_topic
-  unit_of_measurement: 'hPa'
+# - platform: mqtt
+#   name: "Terasse Temperature"
+#   state_topic: !secret weather_station_topic
+#   unit_of_measurement: '°C'
+#   value_template: "{{ value_json.BME280.Temperature }}"
+#   json_attributes_topic:
+#     BME280
+# - platform: mqtt
+#   name: "Terasse Luftfeuchtigkeit"
+#   state_topic: !secret weather_station_topic
+#   unit_of_measurement: '%'
+#   value_template: "{{ value_json.BME280.Humidity }}"
+#   json_attributes_topic:
+#     BME280
+# - platform: mqtt
+#   name: "Terasse Luftruck"
+#   state_topic: !secret weather_station_topic
+#   unit_of_measurement: 'hPa'
+#   value_template: "{{ (value_json.BME280.Pressure | float * 1.04462) | round(2) }}"
+#   json_attributes_topic:
+#     BME280
+
   # p0 = p(h)/e^(-h/7991); 1/e^(-h/7991) ~ 1.046872616
-  value_template: "{{ value_json.BME280.Pressure | float * 1.046872616 | round(2) }}"
-  json_attributes_topic:
-    BME280
-- platform: mqtt
-  name: "Terasse Feinstaub 2.5µm"
-  state_topic: !secret weather_station_topic
-  unit_of_measurement: 'µg/m³'
-  value_template: "{{ value_json['SDS0X1']['PM2.5'] }}"
-  json_attributes_topic:
-    SDS0X1
-- platform: mqtt
-  name: "Terasse Feinstaub 10µm"
-  state_topic: !secret weather_station_topic
-  unit_of_measurement: 'µg/m³'
-  value_template: "{{ value_json.SDS0X1.PM10 }}"
-  json_attributes_topic:
-    SDS0X1
+  # h=366 x= 1.046872616
+  # h=340 x= 1.0434660020868058
+  # h=335 x= 1.0428133055408286
+  # h=325 x= 1.0415091369946343
+# - platform: mqtt
+#   name: "Terasse Luftruck RAW"
+#   state_topic: !secret weather_station_topic
+#   unit_of_measurement: 'hPa'
+#   value_template: "{{ value_json.BME280.Pressure | float | round(2) }}"
+#   json_attributes_topic:
+#     BME280
+# - platform: mqtt
+#   name: "Terasse Feinstaub 2.5µm"
+#   state_topic: !secret weather_station_topic
+#   unit_of_measurement: 'µg/m³'
+#   value_template: "{{ value_json['SDS0X1']['PM2.5'] }}"
+#   json_attributes_topic:
+#     SDS0X1
+# - platform: mqtt
+#   name: "Terasse Feinstaub 10µm"
+#   state_topic: !secret weather_station_topic
+#   unit_of_measurement: 'µg/m³'
+#   value_template: "{{ value_json.SDS0X1.PM10 }}"
+#   json_attributes_topic:
+#     SDS0X1
 
 - platform: luftdaten
   sensor_id: !secret luftdaten_station01

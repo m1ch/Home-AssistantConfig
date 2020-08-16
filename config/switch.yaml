@@ -25,6 +25,20 @@
   retain: false
 
 - platform: mqtt
+  name: "Switch Vacuum Timer"
+  command_topic: "plugs/vacuum_charge/cmnd/POWER"
+  state_topic: "plugs/vacuum_charge/POWER"
+  # state_value_template: "{{value_json.POWER}}"
+  availability_topic: "plugs/vacuum_charge/LWT"
+  json_attributes_topic: "plugs/vacuum_charge/STATE"
+  qos: 2
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+
+- platform: mqtt
   name: "Switch Modem"
   state_topic: "plugs/modem/POWER"
   command_topic: "plugs/modem/cmnd/POWER"
@@ -46,6 +60,98 @@
   qos: 1
   payload_on: "ON"
   payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+
+# TV PLUGS
+- platform: mqtt
+  name: "MQTT TV1 Plug1 all"
+  state_topic: "plugs/tv1/STATE"
+  command_topic: "plugs/tv1/cmnd/POWER1"
+  availability_topic: "plugs/tv1/LWT"
+  json_attributes_topic: "plugs/tv1/STATE"
+  qos: 2
+  payload_on: "ON"
+  state_on: "ON"
+  payload_off: "OFF"
+  state_off: "OFF"
+  value_template: '{{value_json.POWER1}}'
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "MQTT TV1 Plug1-TV"
+  state_topic: "plugs/tv1/STATE"
+  command_topic: "plugs/tv1/cmnd/POWER2"
+  availability_topic: "plugs/tv1/LWT"
+  json_attributes_topic: "plugs/tv1/STATE"
+  qos: 2
+  payload_on: "ON"
+  state_on: "ON"
+  payload_off: "OFF"
+  state_off: "OFF"
+  value_template: '{{value_json.POWER2}}'
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "MQTT TV1 Plug1-AMP"
+  state_topic: "plugs/tv1/STATE"
+  command_topic: "plugs/tv1/cmnd/POWER3"
+  availability_topic: "plugs/tv1/LWT"
+  json_attributes_topic: "plugs/tv1/STATE"
+  qos: 2
+  payload_on: "ON"
+  state_on: "ON"
+  payload_off: "OFF"
+  state_off: "OFF"
+  value_template: '{{value_json.POWER3}}'
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "MQTT TV1 Plug1-FireTV"
+  state_topic: "plugs/tv1/STATE"
+  command_topic: "plugs/tv1/cmnd/POWER4"
+  availability_topic: "plugs/tv1/LWT"
+  json_attributes_topic: "plugs/tv1/STATE"
+  qos: 2
+  payload_on: "ON"
+  state_on: "ON"
+  payload_off: "OFF"
+  state_off: "OFF"
+  value_template: '{{value_json.POWER4}}'
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "MQTT TV1 Plug1-PlayStation"
+  state_topic: "plugs/tv1/STATE"
+  command_topic: "plugs/tv1/cmnd/POWER5"
+  availability_topic: "plugs/tv1/LWT"
+  json_attributes_topic: "plugs/tv1/STATE"
+  qos: 2
+  payload_on: "ON"
+  state_on: "ON"
+  payload_off: "OFF"
+  state_off: "OFF"
+  value_template: '{{value_json.POWER5}}'
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: false
+- platform: mqtt
+  name: "MQTT TV1 Plug1-USB"
+  state_topic: "plugs/tv1/STATE"
+  command_topic: "plugs/tv1/cmnd/POWER6"
+  availability_topic: "plugs/tv1/LWT"
+  json_attributes_topic: "plugs/tv1/STATE"
+  qos: 2
+  payload_on: "ON"
+  state_on: "ON"
+  payload_off: "OFF"
+  state_off: "OFF"
+  value_template: '{{value_json.POWER6}}'
   payload_available: "Online"
   payload_not_available: "Offline"
   retain: false

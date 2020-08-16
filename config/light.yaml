@@ -1,0 +1,167 @@
+- platform: mqtt
+  name: "Gang Licht1"
+  state_topic: "shellies/switch-vorzimmer/relay/0"
+  command_topic: "shellies/switch-vorzimmer/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Gang Licht2"
+  state_topic: "shellies/switch-vorzimmer/relay/1"
+  command_topic: "shellies/switch-vorzimmer/relay/1/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "WC Licht"
+  state_topic: "shellies/switch-wc/relay/0"
+  command_topic: "shellies/switch-wc/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Bad Licht1"
+  state_topic: "shellies/switch-bad/relay/0"
+  command_topic: "shellies/switch-bad/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Bad Licht2"
+  state_topic: "shellies/switch-bad/relay/1"
+  command_topic: "shellies/switch-bad/relay/1/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Kochen Spühle"
+  state_topic: "shellies/switch-kochen1/relay/0"
+  command_topic: "shellies/switch-kochen1/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Kochen Insel"
+  state_topic: "shellies/switch-kochen2/relay/0"
+  command_topic: "shellies/switch-kochen2/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Licht Zimmer 0-1"
+  state_topic: "shellies/switch-zimmer0_1/relay/1"
+  command_topic: "shellies/switch-zimmer0_1/relay/1/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Licht Zimmer 1"
+  state_topic: "shellies/switch-zimmer1/relay/0"
+  command_topic: "shellies/switch-zimmer1/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  name: "Licht Zimmer 2"
+  state_topic: "shellies/switch-zimmer2/relay/0"
+  command_topic: "shellies/switch-zimmer2/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  schema: template
+  name: "Licht Zimmer 3-1"
+  state_topic: "shellies/dimmer-zimmer3_1/light/0/status"
+  command_topic: "shellies/dimmer-zimmer3_1/light/0/set"
+  command_on_template: >
+    {"turn": "on"
+      {% if brightness is defined %} 
+        , "brightness": {{ ( brightness | float * 100/255 ) | int }}
+      {% endif %}
+    }
+  command_off_template: '{"turn":"off"}'
+  state_template: > 
+    {% if value_json.ison %}
+      on
+    {% else %}
+      off
+    {% endif %}
+  brightness_template: >
+    {{ (( value_json.brightness | float ) * 255/100 ) | int }}
+  qos: 2
+  retain: false
+  optimistic: false
+
+- platform: mqtt
+  schema: template
+  name: "Licht Zimmer 3-2"
+  state_topic: "shellies/dimmer-zimmer3_2/light/0/status"
+  command_topic: "shellies/dimmer-zimmer3_2/light/0/set"
+  command_on_template: >
+    {"turn": "on"
+      {% if brightness is defined %} 
+        , "brightness": {{ ( brightness | float * 100/255 ) | int }}
+      {% endif %}
+    }
+  command_off_template: '{"turn":"off"}'
+  state_template: > 
+    {% if value_json.ison %}
+      on
+    {% else %}
+      off
+    {% endif %}
+  brightness_template: >
+    {{ (( value_json.brightness | float ) * 255/100 ) | int }}
+  qos: 2
+  retain: false
+  optimistic: false
+
+# - platform: mqtt
+#   name: "Licht Zimmer 3-2"
+#   state_topic: "shellies/switch-zimmer2/relay/0"
+#   command_topic: "shellies/switch-zimmer2/relay/0/command"
+#   qos: 2
+#   payload_on: "on"
+#   payload_off: "off"
+#   retain: false
+#   optimistic: false
+
+- platform: mqtt
+  name: "Balkon Licht1"
+  state_topic: "shellies/switch-balkon/relay/0"
+  command_topic: "shellies/switch-balkon/relay/0/command"
+  qos: 2
+  payload_on: "on"
+  payload_off: "off"
+  retain: false
+  optimistic: false

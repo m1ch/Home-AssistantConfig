@@ -1,21 +1,58 @@
+# https://www.home-assistant.io/integrations/history/
+
+# The history integration will track everything that is going on within Home Assistant and allows the user to browse through it. It depends on the recorder integration for storing the data and uses the same database setting. If any entities are excluded from being recorded, no history will be available for these entities.
+
 # Enables support for tracking state changes over time.
-# exclude:
-  # domains:
-  #   - automation
-  #   - group
-  #   - weblink
-  #   - updater
-  #   - scene
-  #   - history_graph
-  # entities:
-  #   - sun.sun # Don't record sun data
-  #   - sensor.last_boot # Comes from 'systemmonitor' sensor platform
-  #   - sensor.date
-  #   - sensor.time
-  #   - sensor.moon
-  #   - sensor.sunset
-  #   - sensor.sunrise
-  #   - sensor.solar_angle
-  #   - sensor.season
-  #   - sensor.yr_symbol
-  #   - binary_sensor.workday_sensor
+include:
+  domains:
+    - binary_sensor
+    - cover
+    - device_tracker
+    - input_boolean
+    - input_datetime
+    - input_number
+    - input_select
+    - light
+    - media_player
+    - person
+    - sensor
+    - switch
+    # - timer
+    - vacuum
+    - weather
+exclude:
+  entities:
+    - input_number.target_humidity_schlafzimmer
+    - sensor.time_online
+    - device_tracker.dns
+    - sensor.energy_last_day_01
+    - sensor.energy_last_day_02
+    - sensor.energy_last_day_03
+    - sensor.energy_last_day_04
+    - sensor.energy_last_day_05
+    - sensor.energy_last_day_06
+    - sensor.energy_last_day_07
+    - sensor.energy_last_day_08
+    - sensor.energy_last_day_09
+    - sensor.energy_last_day_10
+    - sensor.energy_last_day_11
+    - sensor.energy_last_hour_01
+    - sensor.energy_last_hour_02
+    - sensor.energy_last_hour_03
+    - sensor.energy_last_hour_04
+    - sensor.energy_last_hour_05
+    - sensor.energy_last_hour_06
+    - sensor.energy_last_hour_07
+    - sensor.energy_last_hour_08
+    - sensor.energy_last_hour_09
+    - sensor.energy_last_hour_10
+    - sensor.energy_last_hour_11
+    - sensor.mfc_j5320dw_b_w_counter
+    - sensor.mfc_j5320dw_black_ink_remaining
+    - sensor.mfc_j5320dw_color_counter
+    - sensor.mfc_j5320dw_cyan_ink_remaining
+    - sensor.mfc_j5320dw_magenta_ink_remaining
+    - sensor.mfc_j5320dw_page_counter
+    - sensor.mfc_j5320dw_status
+    - sensor.mfc_j5320dw_uptime
+    - sensor.mfc_j5320dw_yellow_ink_remaining

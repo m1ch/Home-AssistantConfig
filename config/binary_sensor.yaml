@@ -1,40 +1,22 @@
 - platform: ping
-  #~ name: PC Mich
-  name: ping_pc_m1
-  host: !secret p1_ip_pc
-  count: 2
-
-- platform: ping
-  #~ name: Tel Mich
-  name: ping_phone_m1
-  host: !secret p1_ip_tel
-  count: 2
-
-- platform: ping
-  #~ name: Tel Eva
-  name: ping_phone_e1
-  host: !secret p2_ip_tel
-  count: 2
-
-- platform: ping
-  #~ name: FHEM
-  name: ping_srv_fhem
-  host: fhem.lan
-  count: 2
-
-- platform: ping
-  #~ name: Mailserver
   name: ping_srv_mail
   host: !secret mail_server
   count: 2
 
+- platform: ping
+  name: ping_if_Online
+  host: 8.8.8.8
+  count: 5
+  scan_interval: 2
+
 - platform: workday
+  name: workday
   country: AT
-  province: ST
+  province: 6
 
 - platform: bayesian
   name: wind_med
-  prior: 0.3
+  prior: 0.1
   observations:
     - platform: 'numeric_state'
       entity_id: sensor.yr_wind_speed_km
@@ -51,7 +33,7 @@
 
 - platform: bayesian
   name: wind_high
-  prior: 0.3
+  prior: 0.07
   observations:
     - platform: 'numeric_state'
       entity_id: sensor.yr_wind_speed_km
@@ -89,36 +71,91 @@
       #~ to_state: 'on'
 
 # Time of day
-- platform: tod
-  name: Morgen
-  after: sunrise
-  after_offset: '-00:30'
-  before: '08:00'
+# - platform: tod
+#   name: Morgen
+#   after: sunrise
+#   after_offset: '-00:30'
+#   before: '08:00'
 
-- platform: tod
-  name: Vormittag
-  after: '08:00'
-  before: '12:00'
+# - platform: tod
+#   name: Vormittag
+#   after: '08:00'
+#   before: '12:00'
 
-- platform: tod
-  name: Mittag
-  after: '12:00'
-  before: '14:00'
+# - platform: tod
+#   name: Mittag
+#   after: '12:00'
+#   before: '14:00'
 
-- platform: tod
-  name: Nachmittag
-  after: '14:00'
-  before: 'sunset'
-  before_offset: '01:00'
+# - platform: tod
+#   name: Nachmittag
+#   after: '14:00'
+#   before: 'sunset'
+#   before_offset: '01:00'
 
-- platform: tod
-  name: Abend
-  after: 'sunset'
-  before_offset: '01:00'
-  before: '23:00'
+# - platform: tod
+#   name: Abend
+#   after: 'sunset'
+#   before_offset: '01:00'
+#   before: '23:00'
 
-- platform: tod
-  name: Nacht
-  after: '23:00'
-  before: sunrise
-  before_offset: '-00:30'
+# - platform: tod
+#   name: Nacht
+#   after: '23:00'
+#   before: sunrise
+#   before_offset: '-00:30'
+
+# MQTT Switches
+# - platform: mqtt
+#   name: "Balkon Schalter 2"
+#   state_topic: "shellies/switch-balkon/input/1"
+#   qos: 0
+#   payload_on: 1
+#   payload_off: 0
+
+# - platform: mqtt
+#   name: "Gang Schalter 1"
+#   state_topic: "shellies/switch-balkon/input/0"
+#   qos: 0
+#   payload_on: 1
+#   payload_off: 0
+
+# - platform: mqtt
+#   name: "Gang Schalter 1 lang"
+#   state_topic: "shellies/switch-balkon/longpush/0"
+#   qos: 0
+#   payload_on: 1
+#   payload_off: 0
+
+- platform: mqtt
+  name: "Tuere Eingang"
+  state_topic: "shellies/sensor-eingang-door/sensor/state"
+  payload_off: "close"
+  payload_on: "open"
+  # availability_topic: "shellies/sensor-eingang-door/online"
+  # payload_available: "true"
+  # payload_not_available: "false"
+  expire_after: 86400
+  device_class: door
+
+- platform: mqtt
+  name: "Tuere Balkon"
+  state_topic: "shellies/sensor-balkon-door/sensor/state"
+  payload_off: "close"
+  payload_on: "open"
+  # availability_topic: "shellies/sensor-balkon-door/online"
+  # payload_available: "true"
+  # payload_not_available: "false"
+  expire_after: 86400
+  device_class: door
+
+- platform: mqtt
+  name: "Wasserschaden Bad"
+  state_topic: "shellies/shellyflood-F2AEDF/sensor/flood"
+  payload_off: "false"
+  payload_on: "true"
+  # availability_topic: "shellies/shellyflood-F2AEDF/online"
+  # payload_available: "true"
+  # payload_not_available: "false"
+  expire_after: 86400
+  device_class: moisture

@@ -4,17 +4,35 @@ password: !secret matrix_key
 rooms:
   - !secret matrix_room1
   - !secret matrix_room2
+  - !secret matrix_user1
+  - "#HomeAssistantOnGLT:matrix.org"
 commands:
   - word: sensor
     name: get_sensorvalues
+    rooms: 
+      - !secret matrix_room1
+      - !secret matrix_room2
+      - !secret matrix_user1
   - word: help
     name: get_help
   - word: blindsopen
     name: set_blindsopen
+    rooms: 
+      - !secret matrix_room1
+      - !secret matrix_room2
+      - !secret matrix_user1
   - word: lightsoff
     name: set_lightsoff
+    rooms: 
+      - !secret matrix_room1
+      - !secret matrix_room2
+      - !secret matrix_user1
   - word: vacation
     name: set_vacation
+    rooms: 
+      - !secret matrix_room1
+      - !secret matrix_room2
+      - !secret matrix_user1
   - word: time
     name: get_time
   - expression: "My name is (?P<name>.*)"

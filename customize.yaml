@@ -1,0 +1,22 @@
+sensor.power_meter_01: {}
+sensor.yr_precipitation:
+  unit_of_measurement: l/m²
+sensor.yr_wind_speed:
+  hide: 'true'
+  icon: mdi:weather-windy
+sensor.yr_wind_speed_km:
+  icon: mdi:weather-windy
+sensor.zamg_wind_speed:
+  icon: mdi:weather-windy
+sensor.zamg_wind_max_speed:
+  icon: mdi:weather-windy
+sensor.waqi_don_bosco_wind:
+  icon: mdi:weather-windy
+sensor.schlafzimmer_feuchtigkeit:
+  icon: mdi:water-percent
+sensor.zimmer1_feuchtigkeit:
+  icon: mdi:water-percent
+sensor.yr_humidity:
+  icon: mdi:water-percent
+sensor.waqi_don_bosco_humidity:
+  icon: mdi:water-percent

@@ -4,6 +4,11 @@
       friendly_name: "Solar angle"
       unit_of_measurement: 'degrees'
       value_template: "{{ states.sun.sun.attributes.elevation }}"
+    solar_azimuth:
+      friendly_name: "Solar azimuth"
+      unit_of_measurement: 'degrees'
+      value_template: "{{ states.sun.sun.attributes.azimuth }}"
+
     sunrise:
       value_template: "{{ states.sun.sun.attributes.next_rising }}"
       unit_of_measurement: 'time'
@@ -16,8 +21,29 @@
     dusk:
       value_template: "{{ states.sun.sun.attributes.next_dusk }}"
       unit_of_measurement: 'time'
+
+    time_of_day:
+      value_template: >-
+        {% if state_attr('sun.sun', 'elevation')|float > -1 %}
+          {% if now().hour*60 + now().minute < 8*60+00 %}
+            Morgen
+          {% elif now().hour*60 + now().minute < 11*60+30 %}
+            Vormittag
+          {% elif now().hour*60 + now().minute < 13*60+00 %}
+            Mittag
+          {% else %}
+            Nachmittag
+          {% endif %}
+        {% else %}
+          {% if now().hour*60 > 12*60 and now().hour*60 + now().minute < 23*60+30%}
+            Abend
+          {% else %}
+            Nacht
+          {% endif %}
+        {% endif %}
+
+
     yr_wind_speed_km:
-      friendly_name: "YR Windspeed "
       unit_of_measurement: 'km/h'
       value_template: "{{ states('sensor.yr_wind_speed')| float  * 3600 / 1000 | round(2) }}"
   
@@ -43,8 +69,8 @@
       unit_of_measurement: '°C'
     waqi_don_bosco_wind:
       # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.w }}"
-      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "w") }}'
-      unit_of_measurement: 'm/s'
+      value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "w") | float  * 3600 / 1000 | round(2) }}'
+      unit_of_measurement: 'km/h'
     waqi_don_bosco_feinstaub_pm_10:
       # value_template: "{{ sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria.attributes.pm_10 }}"
       value_template: '{{ state_attr("sensor.waqi_don_bosco_kirche_kreuzung_karntnerstrasse_alte_poststrasse_austria", "pm_10") }}'
@@ -53,4 +79,8 @@
       # value_template: "{{ sensor.waqi_gaswerkstrasse_13_bez_eggenberg_austria.attributes.pm_10 }}"
       value_template: '{{ state_attr("sensor.waqi_gaswerkstrasse_13_bez_eggenberg_austria", "pm_10") }}'
       unit_of_measurement: 'µg/m³'
-    
+    terasse_luftruck:
+      # value_template: '{{ states("sensor.pressure") | float * 1.04462 | round(2) }}'
+      # value_template: '{{ states("sensor.pressure") * ( 1.0 - 0.0065 * 366.0 / ( states("sensor.temperature") + 0.0065 * 366.0 + 273.15 ) ) ** (-5.257) | round(2) }}'
+      value_template: '{{ ((states("sensor.pressure")  | float) * ( 1.0 - 0.0065 * 366.0 / ( states("sensor.temperature") | float  + 0.0065 * 366.0 + 273.15 )) ** -5.257) | round(2)  }}'
+      unit_of_measurement: 'hPa'

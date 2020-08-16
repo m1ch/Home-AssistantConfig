@@ -1,0 +1,103 @@
+'1594981926986':
+  alias: Saug die Kueche
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - kueche
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+'1594982383402':
+  alias: Saug den Gang
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - gang
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+'1594983965681':
+  alias: Saug Schlafzimmer Bad und WC
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - zimmer0
+        - badwc
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+'1594984077893':
+  alias: Saug das Wohnzimmer
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - zimmer3
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+'1595353344355':
+  alias: Saug kueche und gang
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - kueche
+        - gang
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+  mode: single
+'1595353344356':
+  alias: Saug Wohnzimmer und gang
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - zimmer3
+        - gang
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+test_script:
+  alias: Test Script
+  mode: single
+  sequence:
+  - data:
+      payload: Dies ist ein Test
+      topic: homeassistant/message/test
+    service: mqtt.publish
+  - choose:
+    - conditions:
+      - above: '100'
+        condition: numeric_state
+        entity_id: sensor.waqi_don_bosco_wind
+      sequence:
+      - data:
+          position: 0
+        entity_id:
+        - cover.zimmer1_rollo
+        service: cover.set_cover_position
+sauge_kuche_und_essen:
+  alias: Saug Kueche und Essen
+  mode: single
+  sequence:
+  - data:
+      command: zoned_cleanup
+      params:
+        zone_ids:
+        - kueche
+        - essen
+    entity_id: vacuum.rockrobo
+    service: vacuum.send_command
+saug_alles:
+  alias: Saug alles
+  mode: single
+  sequence:
+  - device_id: e210c081be6f442fb9ac6da4640d7c5c
+    domain: vacuum
+    entity_id: vacuum.rockrobo
+    type: clean

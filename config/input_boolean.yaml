@@ -1,0 +1,19 @@
+# notify_home:
+#   name: Notify when someone arrives home
+#   initial: off
+#   icon: mdi:car
+
+# high_wind:
+#   name: Windgeschwindigkeit zu hoch fuer Rollos
+#   initial: off
+#   icon: mdi:car
+
+# entrance_door:
+#   name: Eingangstuere offen
+#   initial: off
+#   icon: mdi:car
+
+# terrace_door:
+#   name: Terrassentuere offen
+#   initial: off
+#   icon: mdi:car

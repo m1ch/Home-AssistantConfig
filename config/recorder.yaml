@@ -1,33 +1,64 @@
-# The recorder component is storing details in a database
-purge_keep_days: 10
+# https://www.home-assistant.io/integrations/recorder/
+
+# The recorder integration is responsible for storing details in a database, which then are handled by the history integration.
+
+## Template to print all entities:
+# {% for state in states -%}
+# - {{ state.entity_id }}{{ "\n"}}
+# {%- endfor %}
+
+purge_keep_days: 14
 db_url: !secret mysql_url
-exclude:
+include:
   domains:
     - automation
+    - binary_sensor
+    # - climate
     - cover
-    - group
+    - device_tracker
+    - input_boolean
     - input_datetime
-    - history_graph
-    - scene
-    - sun
+    - input_number
+    - input_select
+    - light
+    - media_player
+    - person
+    - sensor
     - switch
-    - weblink
-    - zone
+    - timer
+    - vacuum
+    - weather
   entities:
-    - binary_sensor.workday_sensor
-    - binary_sensor.solar_angle
-    - binary_sensor.abend
-    - binary_sensor.mittag
-    - binary_sensor.morgen
-    - binary_sensor.nachmittag
-    - binary_sensor.nacht
-    - binary_sensor.updater
-    - binary_sensor.vormittag
-    # - binary_sensor.wind_high
-    # - binary_sensor.wind_med
-    - binary_sensor.workday_sensor
-    - sensor.dusk
+    - device_tracker.unifi_a0_28_ed_81_58_da_default
+exclude:
+  entity_globs:
+    - device_tracker.iot_*
+    - device_tracker.unifi_*
+  entities:
+    - device_tracker.attgo
+    - device_tracker.dns
+    - device_tracker.espressif
+    - device_tracker.shellydw_f02ec1
+    - device_tracker.shellydw_f0333f
+    - device_tracker.sonoff_1732
+    - device_tracker.tracker_ping_p1
+    - device_tracker.tracker_ping_p2
+    - device_tracker.u7nhd
+    - device_tracker.ugw3
+    - device_tracker.weatherstation
+    - device_tracker.winc_00_00
+    - device_tracker.winc_00_00_2
+    - input_datetime.vac00_charge
+    - input_datetime.wecker_we
+    - input_datetime.wecker_woche
+    - media_player.room1
+    - sensor.austria_coronavirus_confirmed
+    - sensor.austria_coronavirus_current
+    - sensor.austria_coronavirus_deaths
+    - sensor.austria_coronavirus_recovered
+    - sensor.cert_expiry_web_m1ch_eu
     - sensor.dawn
+    - sensor.dusk
     - sensor.moon
     - sensor.season
     - sensor.solar_angle
@@ -35,22 +66,9 @@ exclude:
     - sensor.sunset
     - sensor.time
     - sensor.yr_symbol
-    - sensor.waqi
-
-
-    #  - updater.updater
-    #  - sun.sun
-    #  - sensor.time
-    #  - sensor.date
-    #  - sensor.sunset
-    #  - sensor.sunrise
-    #  - sensor.solar_angle
-    #  - sensor.season
-    #  - sensor.dusk
-    #  - sensor.dawn
-    #  - sensor.luft_mean
-    #  - sensor.speed_dl_mean
-    #  - sensor.speed_ping_mean
-    #  - sensor.speed_ul_mean
-    #  - sensor.yr_symbol
-     
+    - sensor.yr_wind_speed
+    - weather.home
+    - zone.arbeit_eva
+    - zone.arbeit_mich
+    - zone.home
+    - zone.realraum

@@ -1,0 +1,31 @@
+- id: '1594931361266'
+  name: TV Whatching
+  entities:
+    light.licht_zimmer_3_1:
+      friendly_name: Licht Zimmer 3-1
+      state: 'off'
+      supported_features: 41
+    light.licht_zimmer_3_2:
+      brightness: 40
+      friendly_name: Licht Zimmer 3-2
+      state: 'on'
+      supported_features: 41
+- id: '1594931549547'
+  name: TV paused
+  entities:
+    light.licht_zimmer_3_2:
+      brightness: 128
+      friendly_name: Licht Zimmer 3-2
+      state: 'on'
+      supported_features: 41
+- id: '1594931576410'
+  name: TV off
+  entities:
+    light.gang_licht1:
+      friendly_name: Gang Licht1
+      state: 'on'
+      supported_features: 0
+    light.licht_zimmer_3_2:
+      friendly_name: Licht Zimmer 3-2
+      state: 'off'
+      supported_features: 41

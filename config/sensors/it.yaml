@@ -2,3 +2,9 @@
   resources:
     - type: memory_free
     - type: processor_use
+
+- platform: uptime
+  name: Time Online
+  unit_of_measurement: hours
+
+- platform: dnsip

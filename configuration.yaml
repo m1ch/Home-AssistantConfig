@@ -6,6 +6,10 @@
 # http:
 #   base_url: example.duckdns.org:8123
 
+homeassistant:
+  # Customization file
+  customize: !include customize.yaml
+
 # Text to speech
 tts:
   - platform: google_translate
@@ -45,20 +49,28 @@ logbook:          !include config/logbook.yaml
 matrix:           !include config/matrix.yaml
 notify:           !include config/notify.yaml
 
-mqtt:             !include config/mqtt.yaml
+# mqtt:             !include config/mqtt.yaml
 
 # Track the sun
 sun:
+
+weather: !include config/weather.yaml
 
 sensor:           !include_dir_merge_list config/sensors
 binary_sensor:    !include config/binary_sensor.yaml
 device_tracker:   !include config/device_tracker.yaml
 
 switch:           !include config/switch.yaml
+light:            !include config/light.yaml
 climate:          !include config/climate.yaml
-vacuum:           !include config/vacuum.yaml
+# vacuum:           !include config/vacuum.yaml
+timer:            !include config/timer.yaml
 
 input_datetime:   !include config/input_datetime.yaml
+input_boolean:    !include config/input_boolean.yaml
+input_select:     !include config/input_select.yaml
+input_text:
+input_number:
 cover:            !include config/cover.yaml
 
 speedtestdotnet:
@@ -69,6 +81,12 @@ speedtestdotnet:
     - download
     - upload
 
+media_player:
+  # Use the Python ADB implementation
+  - platform: androidtv
+    name: Fire TV 1
+    host: 10.23.10.80
+
 rest_command: !include config/rest_command.yaml
 
 # Enables a map showing the location of tracked devices
@@ -78,4 +96,3 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-

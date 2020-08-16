@@ -2,3 +2,11 @@
 #   hosts:
 #     tracker_ping_p1: !secret p1_ip_tel
 #     tracker_ping_p2: !secret p2_ip_tel
+
+- platform: rest_device_tracker
+  name: tracker_phone_m1
+  resource: !secret p1_gps_api
+  device: 'Nokia 6.1'
+  json_attributes:
+     - longitude: 'lon'
+     - latitude: 'lat'

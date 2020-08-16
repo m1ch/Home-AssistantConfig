@@ -13,7 +13,7 @@ from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 
 from homeassistant.components.device_tracker import PLATFORM_SCHEMA
 from homeassistant.components.device_tracker import DOMAIN
-from homeassistant.components.sensor.rest import RestData
+from homeassistant.components.rest.sensor import RestData
 from homeassistant.const import (
     CONF_PAYLOAD, CONF_NAME, CONF_VALUE_TEMPLATE, CONF_METHOD, CONF_RESOURCE,
     CONF_VERIFY_SSL, CONF_USERNAME, CONF_PASSWORD, ATTR_BATTERY_LEVEL,
@@ -28,28 +28,6 @@ from homeassistant.helpers.entity import Entity
 
 
 __version__ = '0.1.9'
-#from flatten_json import flatten # FIXME: Add dependency
-
-#######################
-#for debug only
-
-def flatten_json(y):
-    out = {}
-
-    def flatten(x, name=''):
-        if type(x) is dict:
-            for a in x:
-                flatten(x[a], name + a + '_')
-        elif type(x) is list:
-            i = 0
-            for a in x:
-                flatten(a, name + str(i) + '_')
-                i += 1
-        else:
-            out[name[:-1]] = x
-
-    flatten(y)
-    return out
 
 ####################
 
@@ -67,11 +45,12 @@ DEFAULT_METHOD = 'GET'
 DEFAULT_NAME = 'REST Tracker'
 DEFAULT_VERIFY_SSL = True
 DEFAULT_FORCE_UPDATE = False
-
 DEFAULT_SCAN_INTERVAL = timedelta(seconds=30)
 SCAN_INTERVAL = DEFAULT_SCAN_INTERVAL
 
 CONF_JSON_ATTRS = 'json_attributes'
+CONF_DEVICE = 'device'
+
 METHODS = ['POST', 'GET']
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -82,6 +61,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
     vol.Optional(CONF_USERNAME): cv.string,
     vol.Optional(CONF_PASSWORD): cv.string,
+    vol.Optional(CONF_DEVICE, default=None): cv.string,
     vol.Optional(CONF_VERIFY_SSL, default=DEFAULT_VERIFY_SSL): cv.boolean,
     vol.Optional(CONF_FORCE_UPDATE, default=DEFAULT_FORCE_UPDATE): cv.boolean,
 })
@@ -109,7 +89,7 @@ async def async_setup_scanner(hass, config, async_see, discovery_info=None):
         
     scanner = RestDeviceTracker(
         hass, rest, async_see, config.get(CONF_NAME),
-        config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL),
+        config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL), config.get(CONF_DEVICE),
         config.get(CONF_JSON_ATTRS), config.get(CONF_FORCE_UPDATE))
 
     return await scanner.async_init()
@@ -117,12 +97,13 @@ async def async_setup_scanner(hass, config, async_see, discovery_info=None):
 class RestDeviceTracker(Entity):
     """Representation of a REST device tracker."""
 
-    def __init__(self, hass, rest, async_see, name, scan_interval, json_attrs, 
-                 force_update=False):
+    def __init__(self, hass, rest, async_see, name, scan_interval, device, json_attrs, 
+                 force_update):
         """Initialize a REST binary sensor."""
         self._hass = hass
         self._rest = rest
         self._name = name
+        self._device = device
         self._scan_interval = scan_interval
         self._json_attrs = {}
         self._force_update = force_update
@@ -133,6 +114,12 @@ class RestDeviceTracker(Entity):
             for key, value in d.items():
                 self._json_attrs[key] = value
                 _LOGGER.debug( key + ' is ' + value)
+        
+        # tracker must have lat and log defined
+        if not 'longitude' in self._json_attrs:
+            self._json_attrs['longitude'] = 'longitude'
+        if not 'latitude' in self._json_attrs:
+            self._json_attrs['latitude'] = 'latitude' 
         
     async def async_init(self):
         """Further initialize connection to REST."""
@@ -151,28 +138,39 @@ class RestDeviceTracker(Entity):
         """Update info from rest."""
         _LOGGER.debug('Updating device data.')
         self._rest.update()
-        value = flatten_json(json.loads(self._rest.data))
-        value = self._rest.data
-        if self._json_attrs:
-            self._attributes = {}
-            if self._rest.data:
-                try:
-                    json_dict = flatten_json(json.loads(self._rest.data))
-                    for k,v in json_dict.items():
-                        _LOGGER.debug(k+' : '+str(v))
-                    if isinstance(json_dict, dict):
-                        attrs = {k: json_dict[v] for k,v in self._json_attrs.items()
-                                 if v in json_dict}
-                        self._attributes = attrs
-                    else:
-                        _LOGGER.warning("JSON result was not a dictionary")
-                except ValueError:
-                    _LOGGER.warning("REST result could not be parsed as JSON")
-                    _LOGGER.debug("Erroneous JSON: %s", value)
-            else:
-                _LOGGER.warning("Empty reply found when expecting JSON data")
-            self._attributes[ATTR_TRACKER] = self._name
-
+        self._attributes = {}
+        
+        result = json.loads(self._rest.data)
+        device = self._device
+        
+        
+        attributes = self._json_attrs.values()
+        
+        match = None
+        flatern = [result]
+        while flatern:
+            sub = flatern.pop(0)
+            if type(sub) != dict:
+                continue
+            if device in sub.keys():
+                match = sub[device]
+                if all( x in match.keys() for x in attributes):
+                    _LOGGER.debug('JSON sub matching %s : %s' % (device, match))
+                    break
+            
+            for val in sub.values():
+                flatern.append(val)
+        
+        if not match:
+            _LOGGER.warning("Nothing found in JSON reply")
+        else:
+            json_attrs_ = {value:key for key, value in self._json_attrs.items()}
+            for key,value in match.items():
+                if key in json_attrs_.keys():
+                    self._attributes[json_attrs_[key]] = value
+                else:
+                    self._attributes[key] = value
+                
             await self._async_see(
                 dev_id=self._name,
                 gps=(self._attributes['latitude'], self._attributes['longitude']),
